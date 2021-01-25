@@ -1,0 +1,36 @@
+{
+	"def": {
+		"title": "Default Widget",
+		"width": "600px",
+		"height": "800px",
+		"refsh": "60",
+		"styles": ["green", "blue"],
+		"stream": {},
+		"hnodes": [
+			{
+				"type": "div",
+				"inline": "",
+				"class": "",
+				"ident": "",
+				"hnodes": [
+					{
+						"type": "p",
+						"text": "this is green",
+						"inline": "",
+						"class": "green",
+						"ident": "",
+						"hnodes": []
+					},
+					{
+						"type": "p",
+						"text": "this is blue",
+						"inline": "",
+						"class": "blue",
+						"ident": "",
+						"hnodes": []
+					}
+				]
+			}
+		]
+	}
+}

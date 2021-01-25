@@ -1,0 +1,7 @@
+{
+	"stylesDir": "/widgets/styles",
+	"stylesCon": "/user_data/styles.json",
+	"widgetCon": "/user_data/widget.json",
+	"moduleCon": "/user_data/module.json",
+	"writeOnMissing": "true"
+}

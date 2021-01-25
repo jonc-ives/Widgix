@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+	<link rel="stylesheet" href="style/boxes.css" type="text/css" />
+	<link rel="stylesheet" href="style/common.css" type="text/css" />
+	<link rel="stylesheet" href="style/dashboard.css" type="text/css" />
+	<script type="text/javascript" src="script/tabs.js"></script>
+	<script type="text/javascript" src="script/node.js"></script>
+</head>
+
+<body>
+	<nav>
+		<h2 onclick="openGithub();">Widgix</h2>
+		<ul>
+			<li onclick="openModules();" id="n-modules">Modules</li>
+			<li onclick="openStyles();" id="n-styles">Styles</li>
+			<li onclick="openWidgets();" id="n-widgets">Widgets</li>
+			<li onclick="openDashboard();" id="n-dashboard" class="n-selected">Dashboard</li>
+		</ul>
+	</nav>
+
+	<span id="dashboard">
+		<div id="db-set">
+			<p id="msg"></p>
+			<div class="set-box">
+				<div class="set">
+					<h3>Serve Widgets</h3>
+					<span class="sld" id="serverToggle" onclick="toggleServer();"><div class="sld-ind sld-lft"></div></span>
+					<div class="lds-dual-ring" id="serverToggleQ"></div>
+				</div><p>Turning this option on makes your widgets accessable to your OBS platform.</p>
+			</div>
+			<div class="set-box">
+				<div class="set">
+					<h3>Serve Remote</h3>
+					<span class="sld" id="networkToggle" onclick="toggleNetwork();"><div class="sld-ind sld-lft"></div></span>
+					<div class="lds-dual-ring" id="networkToggleQ"></div>
+				</div><p>Turning this option on makes your widgets accessable to systems on your local network.</p>
+			</div>
+			<div class="set-box">
+				<div class="set">
+					<h3>Service Port</h3>
+					<!-- entry here -->
+				</div>
+				<p>Note that if you change your service port you'll need to update your OBS browser source links.</p>
+			</div>
+			
+			<div id="qt"><h3 onclick="quitWidgix();">Quit</h3></div>
+		</div>
+
+		<div id="db-cse"></div>
+	</span>
+
+	<span id="widgets"></span>
+
+	<span id="styles"></span>
+
+	<span id="modules"></span>
+
+	<script>readConsoleLogs();</script>
+</body>
+
+</html>

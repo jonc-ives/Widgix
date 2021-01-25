@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en" style="width: {{hwidth}}; height: {{hheight}};">
+
+<head>
+	<title>{{title}}</title>
+	<meta charset="UTF-8" http-equiv="refresh" content="{{refsh}}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+{{#* inline "hnodeExtraction"}}
+	<{{type}} {{#if src}}src="{{src}}" alt=""{{/if}} id="{{ident}}" class="{{class}}" style="{{inline}}">
+		{{#if text}}{{text}}{{/if}}
+		{{#each hnodes}}{{> hnodeExtraction}}{{/each}}
+	</{{type}}>
+{{/inline}}
+
+<style>
+	body {
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0);
+	}
+{{#each styles}}
+	.{{@key}} {
+		{{#each this}}
+			{{@key}}: {{this}};
+		{{/each}}
+	}
+{{/each}}
+</style>
+
+<body>
+	{{#each hnodes}}{{> hnodeExtraction}}{{/each}}
+</body>
+</html>
