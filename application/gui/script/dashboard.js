@@ -1,12 +1,3 @@
-const { ipcRenderer } = require('electron');
-
-var openGithub = function() {
-
-};
-
-// DASHBOARD OPTIONS
-var service_port = 3000;
-
 // updates console log every few seconds
 var readConsoleLogs = function() {
 	ipcRenderer.send('read-console');
@@ -53,15 +44,3 @@ var toggleNetwork = function() {
 		element.firstChild.className = "sld-ind sld-lft";
 	}
 });
-
-// load and render widgets from the saved objects
-
-// load and render widget styles from saved objects
-
-// create a new widget object
-
-// update a widget object
-
-// create a new style object
-
-// update a style object

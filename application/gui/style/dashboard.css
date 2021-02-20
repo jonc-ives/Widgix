@@ -1,84 +1,8 @@
-
-.set-box {
-	width: 100%;
-	padding: 32px 18%;
-	border-bottom: 0.1px solid #dcdcdc;
-	display: flex nowrap;
-	justify-content: left;
-}
-
-.set-box p {
-	margin-top: 12px;
-}
-
-.set {
-	width: 100%;
-	display: flex;
-	flex-flow: row;
-	justify-content: left;
-}
-
-#qt {
+#dashboard {
+	display: block;
 	position: absolute;
-	bottom: 32px; left: 50%;
-	transform: translateX(-50%);
+	height: 100%; width: 100%;
+	top: 0; left: 0;
+	overflow: hidden;
 }
 
-#qt > h3 {
-	cursor: pointer;
-}
-
-/* LOADING INDICATORS */
-
-#serverToggleQ {
-	position: absolute;
-	left: 45px;
-	display: none;
-}
-
-#networkToggleQ {
-	position: absolute;
-	left: 45px;
-	display: none;
-}
-
-/* CONSOLE BOX STYLES */
-
-.cse-warning {
-	width: 100%;
-	background: rgba(215, 215, 125, 0.6);
-	border-bottom: 0.1px solid #dcdcdc;
-	padding: 18px;
-}
-
-.cse-warning p {
-	margin-left: 92px;
-	text-indent: -92px;
-	line-height: 1.5;
-}
-
-.cse-error {
-	width: 100%;
-	background: rgba(215, 0, 0, 0.6);
-	border-bottom: 0.1px solid #dcdcdc;
-	padding: 18px;
-}
-
-.cse-error p {
-	margin-left: 92px;
-	text-indent: -92px;
-	line-height: 1.5;
-}
-
-.cse-success {
-	width: 100%;
-	background: rgba(0, 215, 0, 0.6);
-	border-bottom: 0.1px solid #dcdcdc;
-	padding: 18px;
-}
-
-.cse-success p {
-	margin-left: 92px;
-	text-indent: -92px;
-	line-height: 1.5;
-}

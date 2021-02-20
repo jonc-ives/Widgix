@@ -1,8 +1,8 @@
 {
 	"kjhfdtrsc": {
 		"title": "Default",
-		"width": "",
-		"height": "",
+		"width": "600px",
+		"height": "500px",
 		"refsh": "60",
 		"styles": ["green", "blue"],
 		"stream": [],

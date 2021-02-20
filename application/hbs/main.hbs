@@ -22,11 +22,7 @@
 		background: rgba(0, 0, 0, 0);
 	}
 {{#each styles}}
-	.{{@key}} {
-		{{#each this}}
-			{{@key}}: {{this}};
-		{{/each}}
-	}
+	.{{@key}} {	{{#each this}}{{@key}}: {{this}};{{/each}} }
 {{/each}}
 </style>
 

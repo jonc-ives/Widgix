@@ -112,7 +112,7 @@ server.use(bodyParser.urlencoded({extended: true}));
 
 server.get('/widget', (req, res) => {
 	// make sure it's a legal client
-	if (req.ip !== "::ffff:127.0.0.1" && !network_on) {
+	if (req.ip !== "::ffff:127.0.0.1" && req.ip != "::1" && !network_on) {
 		buildNewLog(dblogs["ext-net"]); res.close();
 	}
 	// get the requested widget name
@@ -178,7 +178,26 @@ ipcMain.on('toggle-network', (event) => {
 	event.reply('toggle-network-reply', network_on);
 });
 
+ipcMain.on('get-widgets', (event) => {
+	var wd_buffer = JSON.parse(fileSystem.readFileSync(user_widgets));
+	event.reply('get-widgets-reply', wd_buffer);
+});
 
+ipcMain.on('delete-widget', (event, key) => {
+	if (!key) return; console.log(key);
+	var old_widgets = JSON.parse(fileSystem.readFileSync(user_widgets));
+	delete old_widgets[key]; var new_widgets = JSON.stringify(old_widgets);
+	console.log(old_widgets); console.log(new_widgets);
+	fileSystem.writeFile(user_widgets, new_widgets, function(err) {
+		if (err) event.reply('delete-widget-reply', false);
+		else event.reply('delete-widget-reply', true);
+	});
+});
+
+ipcMain.on('request-styles', (event) => {
+	let style_rules = JSON.parse( fileSystem.readFileSync(user_styles) );
+	event.reply('request-styles-reply', style_rules);
+});
 
 // all we need to start the gui
 app.whenReady().then(() => {

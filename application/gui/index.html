@@ -4,11 +4,21 @@
 
 <head>
 	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-	<link rel="stylesheet" href="style/boxes.css" type="text/css" />
+	
 	<link rel="stylesheet" href="style/common.css" type="text/css" />
 	<link rel="stylesheet" href="style/dashboard.css" type="text/css" />
-	<script type="text/javascript" src="script/tabs.js"></script>
-	<script type="text/javascript" src="script/node.js"></script>
+	<link rel="stylesheet" href="style/db_console.css" type="text/css" />
+	<link rel="stylesheet" href="style/db_settings.css" type="text/css" />
+	<link rel="stylesheet" href="style/interact.css" type="text/css" />
+	<link rel="stylesheet" href="style/navigation.css" type="text/css" />
+	<link rel="stylesheet" href="style/widgets.css" type="text/css" />
+	<link rel="stylesheet" href="style/widgets_cvs.css" type="text/css" />
+	<link rel="stylesheet" href="style/widgets_map.css" type="text/css" />
+	<link rel="stylesheet" href="style/widgets_tree.css" type="text/css" />
+	
+	<script type="text/javascript" src="script/widgets.js"></script>
+	<script type="text/javascript" src="script/dashboard.js"></script>
+	<script type="text/javascript" src="script/index.js"></script>
 </head>
 
 <body>
@@ -53,7 +63,26 @@
 		<div id="db-cse"></div>
 	</span>
 
-	<span id="widgets"></span>
+	<span id="widgets">
+		<div id="wd-map"></div>
+		<div id="wd-tre"></div>
+		<div id="wd-cvs">
+			<div id="wd-cvs-cvs"></div>
+			<div id="wd-cvs-opt">
+				<div>
+					<p id="zoom-ctl"></p>
+					<div id="inc-cont">
+						<button class="inc" id="zm-inc">+</button>
+						<button class="inc" id="zm-dec">-</button>
+					</div>
+				</div>
+				<div>
+					<h3>Preview Controls</h3>
+				</div>
+
+			</div>
+		</div>
+	</span>
 
 	<span id="styles"></span>
 
@@ -63,3 +92,4 @@
 </body>
 
 </html>
+

@@ -1,0 +1,11 @@
+#wd-tre {
+	box-sizing: border-box;
+	background: #efefef;
+	width: 265px; height: 100%;
+	position: absolute;
+	top: 0; right: 0;
+	padding-top: 62px;
+	border-left: 0.1px solid #bebebe;
+	z-index: 9;
+	display: none;
+}

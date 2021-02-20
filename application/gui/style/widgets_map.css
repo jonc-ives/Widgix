@@ -1,0 +1,62 @@
+#wd-map {
+	box-sizing: border-box;
+	background: #efefef;
+	display: block;
+	width: 265px; height: 100%;
+	position: absolute;
+	top: 0; left: 0;
+	padding-top: 62px;
+	border-right: 0.1px solid #bebebe;
+	z-index: 9;
+}
+
+/* Create New Widget Pane */
+
+#wd-map-new {
+	padding: 16px;
+	display: flex;
+	flex-flow: row;
+	justify-content: left;
+	border-bottom: 0.1px solid #cecece;
+}
+
+#wd-map-new-tt {
+
+}
+
+#wd-map-new-btn {
+	font-size: 14px;
+	color: #ffffff;
+	width: 23px;
+	height: 23px;
+	background-color: green;
+	border: 1px gray solid;
+	border-radius: 6px;
+	margin-left: 16px;
+	font-weight: bolder;
+	cursor: pointer;
+}
+
+/* Widget Map Panes */
+
+.wd-map-wd {
+	padding: 16px;
+	height: 55px;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 0.1px solid #cecece;
+	border-left: 2px solid #efefef;
+	cursor: pointer;
+}
+
+.wd-map-wd:hover {
+	border-left: 2px solid #3273a8;
+}
+
+.wd-map-wd-open {
+	border-left: 2px solid #3273a8;
+}
+
+#wd-tree {
+	
+}
