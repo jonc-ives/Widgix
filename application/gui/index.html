@@ -5,90 +5,99 @@
 <head>
 	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 	
+	<!-- Style Sheet for common elements -->
 	<link rel="stylesheet" href="style/common.css" type="text/css" />
+	<!-- Dashboard Style Sheets -->
 	<link rel="stylesheet" href="style/dashboard.css" type="text/css" />
-	<link rel="stylesheet" href="style/db_console.css" type="text/css" />
-	<link rel="stylesheet" href="style/db_settings.css" type="text/css" />
-	<link rel="stylesheet" href="style/interact.css" type="text/css" />
+	<link rel="stylesheet" href="style/dbconsole.css" type="text/css" />
+	<link rel="stylesheet" href="style/dboptions.css" type="text/css" />
+	<link rel="stylesheet" href="style/dbserver.css" type="text/css" />
+	<link rel="stylesheet" href="style/dbwidgets.css" type="text/css" />
+	<!-- Modules Style Sheets -->
+	<!-- Troubleshoot Style Sheets -->
+	<!-- Style Sheet for navigation -->
 	<link rel="stylesheet" href="style/navigation.css" type="text/css" />
-	<link rel="stylesheet" href="style/widgets.css" type="text/css" />
-	<link rel="stylesheet" href="style/widgets_cvs.css" type="text/css" />
-	<link rel="stylesheet" href="style/widgets_map.css" type="text/css" />
-	<link rel="stylesheet" href="style/widgets_tree.css" type="text/css" />
 	
-	<script type="text/javascript" src="script/widgets.js"></script>
+	<!-- Scripts for loading and requesting data -->
 	<script type="text/javascript" src="script/dashboard.js"></script>
-	<script type="text/javascript" src="script/index.js"></script>
 </head>
 
 <body>
 	<nav>
 		<h2 onclick="openGithub();">Widgix</h2>
 		<ul>
-			<li onclick="openModules();" id="n-modules">Modules</li>
-			<li onclick="openStyles();" id="n-styles">Styles</li>
-			<li onclick="openWidgets();" id="n-widgets">Widgets</li>
-			<li onclick="openDashboard();" id="n-dashboard" class="n-selected">Dashboard</li>
+			<li onclick="tblClicked();" id="nav-tbl" class="nav close">Troubleshoot</li>
+			<li onclick="modClicked();" id="nav-mod" class="nav close">Modules</li>
+			<li onclick="dbClicked();" id="nav-db" class="nav open">Dashboard</li>
 		</ul>
 	</nav>
 
-	<span id="dashboard">
-		<div id="db-set">
-			<p id="msg"></p>
-			<div class="set-box">
-				<div class="set">
-					<h3>Serve Widgets</h3>
-					<span class="sld" id="serverToggle" onclick="toggleServer();"><div class="sld-ind sld-lft"></div></span>
-					<div class="lds-dual-ring" id="serverToggleQ"></div>
-				</div><p>Turning this option on makes your widgets accessable to your OBS platform.</p>
-			</div>
-			<div class="set-box">
-				<div class="set">
-					<h3>Serve Remote</h3>
-					<span class="sld" id="networkToggle" onclick="toggleNetwork();"><div class="sld-ind sld-lft"></div></span>
-					<div class="lds-dual-ring" id="networkToggleQ"></div>
-				</div><p>Turning this option on makes your widgets accessable to systems on your local network.</p>
-			</div>
-			<div class="set-box">
-				<div class="set">
-					<h3>Service Port</h3>
-					<!-- entry here -->
+	<div id="db">
+		<div id="db-options" class="rgt-wall">
+			<div class="tt-pane bot-wall"><h1 class="pane-tt">Options</h1></div>
+			<!-- Serve Remote Option -->
+			<div id="serve-remote" class="pane bot-wall">
+				<div class="entry-pair">
+					<label for="sel-remote" class="entry-label">Serve Remote:</label>
+					<select id="sel-remote" class="drop-down entry">
+						<option value="no">Never</option>
+						<option value="safe">Whitelist</option>
+						<option value="yes">Always</option>		
+					</select>
 				</div>
-				<p>Note that if you change your service port you'll need to update your OBS browser source links.</p>
+				<ul id="safe-remotes">
+					<div class="top-wall"></div>
+					<li class="safe-remote">127.000.000.001</li>
+					<li id="add-safe-remote">
+						<input type="text" id="new-safe" class="txt-entry entry" value="xxx.xxx.xxx.xxx" />
+						<div id="add-new-safe" class="main-button">Add</div>
+					</li>
+				</ul>
 			</div>
-			
-			<div id="qt"><h3 onclick="quitWidgix();">Quit</h3></div>
-		</div>
-
-		<div id="db-cse"></div>
-	</span>
-
-	<span id="widgets">
-		<div id="wd-map"></div>
-		<div id="wd-tre"></div>
-		<div id="wd-cvs">
-			<div id="wd-cvs-cvs"></div>
-			<div id="wd-cvs-opt">
-				<div>
-					<p id="zoom-ctl"></p>
-					<div id="inc-cont">
-						<button class="inc" id="zm-inc">+</button>
-						<button class="inc" id="zm-dec">-</button>
+			<!-- Server Port Option -->
+			<div id="server-port" class="pane bot-wall">
+				<div class="entry-pair">
+					<label for="port-num" class="entry-label">Server Port:</label>
+					<div class="entry">
+						<input type="text" id="port-num" class="txt-entry" value="3000"/>
+						<div id="change-port" class="main-button">Change</div>
 					</div>
 				</div>
-				<div>
-					<h3>Preview Controls</h3>
-				</div>
-
 			</div>
+			<!-- Refresh Rate -->
+			<div id="refresh-rate" class="pane bot-wall">
+				<div class="entry-pair">
+					<label for="sel-refresh" class="entry-label">Refresh Rate:</label>
+					<select id="sel-refresh" class="drop-down entry">
+						<option value="low">Low</option>
+						<option value="medium">Medium</option>
+						<option value="high">High</option>
+						<option value="crazy">Too High</option>
+					</select>
+				</div>
+			</div>
+			<!-- Debug Configuration -->
+			<div id="debug-config" class="pane bot-wall">
+				<div class="entry-pair">
+					<label for="sel-debug" class="entry-label">Debug Config:</label>
+					<select id="sel-debug" class="drop-down entry">
+						<option value="none">Normal</option>
+						<option value="log">Log Errors</option>
+						<option value="all">Developer</option>
+					</select>
+				</div>
+			</div>
+			<!-- Quit Application Button -->
+			<div id="quit-app" class="main-button">Quit</div>
 		</div>
-	</span>
+		<div id="db-widgets" class="rgt-wall"></div>
+		<div id="db-server" class="bot-wall"></div>
+		<div id="db-console"></div>
+	</div>
 
-	<span id="styles"></span>
+	<span id="mod"></span>
 
-	<span id="modules"></span>
-
-	<script>readConsoleLogs();</script>
+	<span id="tbl"></span>
 </body>
 
 </html>

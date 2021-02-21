@@ -1,8 +1,36 @@
-#dashboard {
+#db {
 	display: block;
 	position: absolute;
 	height: 100%; width: 100%;
+	background: #2c2c30;
 	top: 0; left: 0;
 	overflow: hidden;
 }
 
+#db-options {
+	width: 22%; height: 100%;
+	background: #2c2c30;
+	position: absolute;
+	top: 0px; left: 0px;
+}
+
+#db-widgets {
+	width: 48%; height: 100%;
+	background: #2c2c30;
+	position: absolute;
+	top: 0px; left: 22%;
+}
+
+#db-server {
+	width: 30%; height: 28%;
+	background: #2c2c30;
+	position: absolute;
+	top: 0px; left: 70%;
+}
+
+#db-console {
+	width: 30%; height: 82%;
+	background: #2c2c30;
+	position: absolute;
+	top: 28%; left: 70%;
+}

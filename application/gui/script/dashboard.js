@@ -1,46 +1,61 @@
-// updates console log every few seconds
-var readConsoleLogs = function() {
-	ipcRenderer.send('read-console');
-	setTimeout(readConsoleLogs, 4*1000);
-}; ipcRenderer.on('read-console-reply', (event, new_logs) => {
-	var cse = document.getElementById("db-cse");
-	for (var i=0;i<new_logs.length;i++) {
-		let log = document.createElement("div");
-		log.className = new_logs[i].type;
-		let txt = document.createElement("p");
-		txt.innerHTML = new_logs[i].text;
-		log.appendChild(txt); cse.prepend(log);
-	}
-});
+const { ipcRenderer } = require('electron');
 
-// server toggle invocation and reply handling
-var toggleServer = function() {
-	document.getElementById("serverToggleQ").style.display = "inline-block";
+var change_remote = function() {
+	// assign new_value here
+	ipcRenderer.send('change-remote', new_value);
+};
+
+var add_trusted = function() {
+	// assign new_trusted here
+	ipcRenderer.send('add-trusted', new_trusted);
+};
+
+var change_port = function() {
+	// assert server is inactive, indicate if not
+	// assign new_port here
+	ipcRenderer.send('change-port', new_port);
+};
+
+var change_refresh = function() {
+	// assign new_refresh here
+	ipcRenderer.send('change-refresh', new_refresh);
+};
+
+var change_debug = function() {
+	// assing new_debug here
+	ipcRenderer.send('change-debug', new_debug);
+};
+
+var preview_widget = function() {
+	// assign widget_name here
+	ipcRenderer.send('launch-preview', widget_name);
+};
+
+var create_widget = function() {
+	// open new widget dialogue launcher
+	// if cancel, return to application
+	// assign widget_dict here
+	ipcRenderer.send('create-widget', widget_dict);
+};
+
+var copy_widget = function() {
+	// assign widget_name here
+	ipcRenderer.send('copy-widget', widget_name);
+};
+
+var open_widget = function() {
+	// assign widget_name here
+	ipcRenderer.send('edit-widget', widget_name);
+};
+
+var delete_widget = function() {
+	// assign widget_name here
+	// launch delete widget window
+	// if cancel, return to application
+	ipcRenderer.send('delete-widget', widget_name);
+}
+
+var toggle_server = function() {
+	// make style changes here
 	ipcRenderer.send('toggle-server');
-}; ipcRenderer.on('toggle-server-reply', (event, server_state) => {
-	document.getElementById("serverToggleQ").style.display = "none";
-	element = document.getElementById("serverToggle");
-	if (server_state) {
-		element.style.background = "#66ff33";
-		element.firstChild.className = "sld-ind sld-rgt";
-	} else {
-		element.style.background = "#e1e1e1";
-		element.firstChild.className = "sld-ind sld-lft";
-	}
-});
-
-// server toggle invocation and reply handling
-var toggleNetwork = function() {
-	document.getElementById("networkToggleQ").style.display = "inline-block";
-	ipcRenderer.send('toggle-network');
-}; ipcRenderer.on('toggle-network-reply', (event, network_state) => {
-	document.getElementById("networkToggleQ").style.display = "none";
-	element = document.getElementById("networkToggle");
-	if (network_state) {
-		element.style.background = "#66ff33";
-		element.firstChild.className = "sld-ind sld-rgt";
-	} else {
-		element.style.background = "#e1e1e1";
-		element.firstChild.className = "sld-ind sld-lft";
-	}
-});
+};
