@@ -1,7 +1,1 @@
-{
-	"stylesDir": "/widgets/styles",
-	"stylesCon": "/user_data/styles.json",
-	"widgetCon": "/user_data/widget.json",
-	"moduleCon": "/user_data/module.json",
-	"writeOnMissing": "true"
-}
+{"widgets":["/user_data","relative"],"modules":["/lib/modules","relative"],"writeOnMissing":"true","user_settings":{"server_port":3000,"serve_remote":"safe","trusted":["127.000.000.001"],"refresh_rate":"medium","config":"all"}}

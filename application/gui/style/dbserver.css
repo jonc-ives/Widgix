@@ -1,0 +1,26 @@
+#db-server > div {
+	width: 52%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: left;
+	position: absolute;
+	right: -210px; top: 22%;
+}
+
+#db-server > h3 {
+	font-size: 22px;
+	color: #ffffff;
+	position: absolute;
+	left: 22px; top: 20%;
+}
+
+#server-st {
+	font-size: 12px;
+	color: #ffffff;
+	font-style: italic;
+}
+
+#server-tg {
+	position: absolute;
+	top: 24%; left: 180px;
+}

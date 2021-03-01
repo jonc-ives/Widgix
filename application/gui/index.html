@@ -10,7 +10,6 @@
 	<!-- Dashboard Style Sheets -->
 	<link rel="stylesheet" href="style/dashboard.css" type="text/css" />
 	<link rel="stylesheet" href="style/dbconsole.css" type="text/css" />
-	<link rel="stylesheet" href="style/dboptions.css" type="text/css" />
 	<link rel="stylesheet" href="style/dbserver.css" type="text/css" />
 	<link rel="stylesheet" href="style/dbwidgets.css" type="text/css" />
 	<!-- Modules Style Sheets -->
@@ -33,72 +32,39 @@
 	</nav>
 
 	<div id="db">
-		<div id="db-options" class="rgt-wall">
-			<div class="tt-pane bot-wall"><h1 class="pane-tt">Options</h1></div>
-			<!-- Serve Remote Option -->
-			<div id="serve-remote" class="pane bot-wall">
-				<div class="entry-pair">
-					<label for="sel-remote" class="entry-label">Serve Remote:</label>
-					<select id="sel-remote" class="drop-down entry">
-						<option value="no">Never</option>
-						<option value="safe">Whitelist</option>
-						<option value="yes">Always</option>		
-					</select>
-				</div>
-				<ul id="safe-remotes">
-					<div class="top-wall"></div>
-					<li class="safe-remote">127.000.000.001</li>
-					<li id="add-safe-remote">
-						<input type="text" id="new-safe" class="txt-entry entry" value="xxx.xxx.xxx.xxx" />
-						<div id="add-new-safe" class="main-button">Add</div>
-					</li>
-				</ul>
-			</div>
-			<!-- Server Port Option -->
-			<div id="server-port" class="pane bot-wall">
-				<div class="entry-pair">
-					<label for="port-num" class="entry-label">Server Port:</label>
-					<div class="entry">
-						<input type="text" id="port-num" class="txt-entry" value="3000"/>
-						<div id="change-port" class="main-button">Change</div>
-					</div>
-				</div>
-			</div>
-			<!-- Refresh Rate -->
-			<div id="refresh-rate" class="pane bot-wall">
-				<div class="entry-pair">
-					<label for="sel-refresh" class="entry-label">Refresh Rate:</label>
-					<select id="sel-refresh" class="drop-down entry">
-						<option value="low">Low</option>
-						<option value="medium">Medium</option>
-						<option value="high">High</option>
-						<option value="crazy">Too High</option>
-					</select>
-				</div>
-			</div>
-			<!-- Debug Configuration -->
-			<div id="debug-config" class="pane bot-wall">
-				<div class="entry-pair">
-					<label for="sel-debug" class="entry-label">Debug Config:</label>
-					<select id="sel-debug" class="drop-down entry">
-						<option value="none">Normal</option>
-						<option value="log">Log Errors</option>
-						<option value="all">Developer</option>
-					</select>
-				</div>
-			</div>
-			<!-- Quit Application Button -->
-			<div id="quit-app" class="main-button">Quit</div>
-		</div>
-		<div id="db-widgets" class="rgt-wall"></div>
-		<div id="db-server" class="bot-wall"></div>
 		<div id="db-console"></div>
+		<div id="db-widgets" class="rgt-wall"></div>
+		<div id="db-server" class="top-wall rgt-wall">
+			<h3>Activate Widgets</h3>
+			<span class="sld-track sld-tr-off" id="server-tg" onclick="toggle_server();">
+				<div class="sld-thumb sld-th-off" id="server-tg-thumb"></div>
+			</span>
+			<div>
+				<p id="server-st">ready to serve</p>
+				<div class="cell cell-off" id="server-st-q"><div class="pl pl-origami"></div></div>
+			</div>
+		</div>
 	</div>
 
 	<span id="mod"></span>
-
 	<span id="tbl"></span>
 </body>
 
 </html>
+
+<!--
+SAMPLE WIDGET PANE
+<div class="dbwd-pane bot-wall">
+	<div class="dbwd-txt">
+		<h2>Default One</h2>
+		<p>last used: 3 hours ago</p>
+	</div>
+	<div class="dbwd-ctl">
+		<div class="main-button dbwd-edit">EDIT</div>
+		<div class="main-button dbwd-cpy">COPY</div>
+		<div class="main-button dbwd-del">DELETE</div>
+		<h3>http://localhost:3000/widget?name=def</h3>
+	</div>
+</div>
+-->
 

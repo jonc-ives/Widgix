@@ -1,0 +1,71 @@
+
+#db-widgets::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+#db-widgets::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+#db-widgets::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+/* STYLES FOR PANE ELEMENTS */
+
+.dbwd-pane {
+	width: 95%; height: 92px;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	margin: auto;
+}
+
+/* text boxes on the left of pane */
+.dbwd-txt {
+	height: 100%;
+	padding: 14px;
+	display: flex;
+	flex-flow: row wrap;
+	color: #ffffff;
+}
+
+/* widget title */
+.dbwd-txt h2 {
+	font-size: 24px;
+	letter-spacing: 2px;
+}
+
+/* last used */
+.dbwd-txt p {
+	font-size: 10px;
+	text-decoration: underline;
+	padding-left: 32px;
+	color: #767676;
+	transform: translateY(10px);
+}
+
+/* container for buttons */
+.dbwd-ctl {
+	display: flex;
+	flex-flow: row-reverse wrap;
+	justify-content: right;
+	width: 280px;
+}
+
+/* widget link */
+.dbwd-ctl h3 {
+	font-size: 12px;
+	color: #767676;
+	padding-left: 8px;
+	width: 100%;
+	text-align: right;
+}
+
+/* edit widget button */
+.dbwd-edit, .dbwd-cpy, .dbwd-del {
+	height: 28px;
+	margin: auto 0;
+}
