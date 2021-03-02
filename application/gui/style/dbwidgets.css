@@ -21,6 +21,7 @@
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	margin: auto;
+	overflow: hidden;
 }
 
 /* text boxes on the left of pane */
@@ -34,7 +35,7 @@
 
 /* widget title */
 .dbwd-txt h2 {
-	font-size: 24px;
+	font-size: 30px;
 	letter-spacing: 2px;
 }
 
@@ -64,8 +65,126 @@
 	text-align: right;
 }
 
-/* edit widget button */
+/* widget control buttons */
 .dbwd-edit, .dbwd-cpy, .dbwd-del {
 	height: 28px;
 	margin: auto 0;
+}
+
+/* add a new widget */
+#new-wd {
+	background: #43464b;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	border-radius: 6px;
+	cursor: pointer;
+	color: #afafaf;
+	padding: 6px;
+	font-size: 16px;
+	width: 88%; height: 32px;
+	text-align: center;
+	margin: 16px auto;
+}
+
+#new-wd:hover {
+	background: #33363b;
+}
+
+/* modal for deleting widgets */
+
+#del-cover {
+	display: none;
+	position: fixed;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	height: 100vh; width: 100vw;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+#del-modal {
+	position: fixed;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	width: 300px; height: 170px;
+	border-radius: 12px;
+	background: #ffffff;
+	padding: 32px;
+}
+
+#del-modal > .main-button {
+	margin: 8px 0;
+}
+
+#del-modal > h3 {
+	text-align: center;
+	padding-bottom: 8px;
+}
+
+/* modal for creating widgets */
+
+#new-cover {
+	display: none;
+	position: fixed;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	height: 100vh; width: 100vw;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+#new-modal {
+	position: fixed;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	width: 360px; height: 258px;
+	border-radius: 12px;
+	background: #ffffff;
+	padding: 32px;
+}
+
+#new-modal > h3 {
+	font-size: 22px;
+	font-weight: bolder;
+	margin-bottom: 16px;
+}
+
+.new-lb {
+	width: 18%;
+	text-align: right;
+	margin-right: 6px;
+}
+
+#new-tt-pair {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: left;
+	margin-bottom: 10px;
+}
+
+#new-sz-set {
+	width: 100%; 
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: left;
+	margin-bottom: 10px;
+}
+
+#new-wid {
+	width: 50px;
+}
+
+.new-fmt {
+	padding: 0 2px;
+}
+
+#new-hgt {
+	width: 50px;
+}
+
+#new-oe {
+	margin-left: 9%;
+	margin-bottom: 15px;
+}
+
+#new-confirm {
+	margin-bottom: 6px;
 }

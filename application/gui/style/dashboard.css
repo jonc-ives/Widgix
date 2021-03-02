@@ -31,4 +31,6 @@
 	grid-column-end: span 1;
 	grid-row-start: 2;
 	grid-row-end: span 2;
+	position: relative;
+	overflow-y: scroll;
 }

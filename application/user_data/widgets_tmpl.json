@@ -1,6 +1,105 @@
 {
-	"kjhfdtrsc": {
-		"title": "Default",
+	"kasodtrsc": {
+		"title": "CoD Warzone Stats",
+		"width": "600px",
+		"height": "500px",
+		"refsh": "60",
+		"styles": ["green", "blue"],
+		"stream": [],
+		"hnodes": [
+			{
+				"type": "p",
+				"text": "this should be big and blue",
+				"inline": "",
+				"class": "blue",
+				"ident": "oksjdiaos",
+				"hnodes": []
+			},{
+				"type": "div",
+				"text": "",
+				"inline": "",
+				"class": "",
+				"ident": "oksjdiass",
+				"hnodes": [{
+
+					"type": "p",
+					"text": "this should be small and green",
+					"inline": "",
+					"class": "green",
+					"ident": "oksjsiaos",
+					"hnodes": []
+				}]
+			}
+		]
+	},
+	"oiudstrsc": {
+		"title": "Recent Warzone Games",
+		"width": "600px",
+		"height": "500px",
+		"refsh": "60",
+		"styles": ["green", "blue"],
+		"stream": [],
+		"hnodes": [
+			{
+				"type": "p",
+				"text": "this should be big and blue",
+				"inline": "",
+				"class": "blue",
+				"ident": "oksjdiaos",
+				"hnodes": []
+			},{
+				"type": "div",
+				"text": "",
+				"inline": "",
+				"class": "",
+				"ident": "oksjdiass",
+				"hnodes": [{
+
+					"type": "p",
+					"text": "this should be small and green",
+					"inline": "",
+					"class": "green",
+					"ident": "oksjsiaos",
+					"hnodes": []
+				}]
+			}
+		]
+	},
+	"oiudstrsc": {
+		"title": "Title Banner",
+		"width": "600px",
+		"height": "500px",
+		"refsh": "60",
+		"styles": ["green", "blue"],
+		"stream": [],
+		"hnodes": [
+			{
+				"type": "p",
+				"text": "this should be big and blue",
+				"inline": "",
+				"class": "blue",
+				"ident": "oksjdiaos",
+				"hnodes": []
+			},{
+				"type": "div",
+				"text": "",
+				"inline": "",
+				"class": "",
+				"ident": "oksjdiass",
+				"hnodes": [{
+
+					"type": "p",
+					"text": "this should be small and green",
+					"inline": "",
+					"class": "green",
+					"ident": "oksjsiaos",
+					"hnodes": []
+				}]
+			}
+		]
+	},
+	"oidustrsc": {
+		"title": "CoD Warzone Stats 2",
 		"width": "600px",
 		"height": "500px",
 		"refsh": "60",

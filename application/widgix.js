@@ -44,6 +44,7 @@ var createDirectory = function(pathname, dblog_key) {
 var writeFile = function(pathname, data, dblog_key) {
 	pathname = pathname.replace(/^\.*\/|\/$/g, '');
 	fileSystem.writeFileSync(path.resolve(__dirname, pathname), JSON.stringify(data));
+	if (pathname === widgets_fn) { reload_dbwidgets(); reload_dblogs(); }
 };
 
 var createDirFile = function(pathname, data, dblog_key) {
@@ -108,19 +109,32 @@ server.set('view engine', 'hbs');
 server.use(bodyParser.urlencoded({extended: true}));
 
 server.get('/widget', (req, res) => {
+	
 	// make sure it's a legal client
 	if (req.ip !== "::ffff:127.0.0.1" && req.ip != "::1" && !network_on) {
-		buildNewLog(dblogs["ext-net"]); res.close();
+		handle_error("failedremote"); res.close();
 	}
+	
 	// get the requested widget name
 	let rname = req.query["name"];
-	if (!rname) return rnameNotify();
+	if (!rname) {
+		handle_error("norname"); res.close();
+	}
+	
 	// get the widget_object -- this is sync
-	let widget = getWidgetObject(rname);
-	if (widget === 0) return widgetNotify();
+	let widget = widgets_obj[rname];
+	if (widget === undefined) {
+		handle_error("badrname"); res.close();
+	}
+
 	// get the strdat_object -- this is async so callback to render
 	moduleAPI.getStreamData(widget["stream"]).then((strdat) => {
-		if (strdat === 0) return strdatNotify();
+		// we don't serve widgets with bad data
+		if (strdat === 0) {
+			handle_error("badstream"); res.close();
+		}
+
+		// build the render object, render
 		let render = { // build the render_object for render
 		 	"title": widget["title"] ? widget["title"] : "Widgix Widget",
 		 	"hwidth": widget["width"] ? widget["width"] : "800px",
@@ -128,38 +142,63 @@ server.get('/widget', (req, res) => {
 		 	"refsh": widget["refsh"] ? widget["refsh"] : "300",
 		 	"strdat": strdat,
 		 	"hnodes": widget["hnodes"] ? widget["hnodes"] : {}
-		}; buildNewLog(dblogs["widget-served"]); res.render('main', render);
+		};
+
+		// change the lastup object from widget -- store
+		widgets_obj[rname]["lastup"] = Math.floor(Date.now() / 1000);
+		writeFile(widgets_fn, widgets_obj, "lastup");
+
+		// log and complete the successful widget request
+		build_dblog("goodwidget");
+		res.render('main', render);
 	});
 });
 
-// INTERFACE TO RENDERER PROCESS
+// INTERFACE TO EDITOR WINDOW
 
-ipcMain.on('launch-preview', (event, widget_name) => {
+var load_edwidget = function() {
 
-});
-
-ipcMain.on('create-widget', (event, widget_dict) => {
-
-});
-
-ipcMain.on('copy-widget', (event, widget_name) => {
-
-});
-
-ipcMain.on('edit-widget', (event, widget_name) => {
-
-});
+};
 
 ipcMain.on('rename-widget', (event, new_name) => {
 
 });
 
-ipcMain.on('delete-widget', (event, key) => {
-	
-});
-
 ipcMain.on('save-widget', (event, widget_name) => {
 
+});
+
+// INTERFACE TO DASHBOARD WINDOW
+
+// this is really lazy, but ask me if I gaf
+var create_wid = function() {
+	const alphabet = "abcdefghijklmnopqrstuvwxyz";
+	var new_wid = "";
+	for (var i = 0; i < 9; i++)
+		new_wid += alphabet[Math.floor(Math.random() * alphabet.length)]
+	return new_wid;
+};
+
+var reload_dbwidgets = function() {
+	appWindow.webContents.send('reload-dbwidgets', widgets_obj);
+};
+
+var reload_dblogs = function() {
+	appWindow.webContents.send('reload-dblogs', dblog_buffer);
+};
+
+ipcMain.on('load-db', (event) => {
+	// create a dblog to indicate load
+	build_dblog("loaddashboard");
+	// pull the necessary data for widget panes
+	var dbwidgets = {};
+	for (var wid in widgets_obj) {
+		dbwidgets[wid] = {
+			"title": widgets_obj[wid]["title"],
+			"lastup": widgets_obj[wid]["lastup"]
+		};
+	} // send the widgets and dblog to the rendered process
+	event.reply('load-db-reply', dbwidgets, dblog_buffer);
 });
 
 ipcMain.on('toggle-server', (event) => {
@@ -177,6 +216,39 @@ ipcMain.on('toggle-server', (event) => {
 	}
 });
 
+ipcMain.on('create-widget', (event, widget_dict) => {
+	var new_widget = {
+		"title": widget_dict["title"],
+		"width": widget_dict["width"],
+		"height": widget_dict["height"],
+		"refsh": "60",
+		"stream": [],
+		"hnodes": []
+	}
+
+	var new_widget_id = create_wid()
+	widgets_obj[new_widget_id] = new_widget;
+	writeFile(widgets_fn, widgets_obj, "newwidget");
+	event.reply('create-widget-reply', new_widget_id);
+});
+
+ipcMain.on('copy-widget', (event, widget_name) => {
+	var new_widget = JSON.parse(JSON.stringify(widgets_obj[widget_name]));
+	new_widget["title"] += " (copy)";
+	widgets_obj[create_wid()] = new_widget;
+	writeFile(widgets_fn, widgets_obj, "copywidget");
+	reload_dblogs(); reload_dbwidgets();
+});
+
+ipcMain.on('edit-widget', (event, widget_name) => {
+	
+});
+
+ipcMain.on('delete-widget', (event, key) => {
+	delete widgets_obj[key];
+	writeFile(widgets_fn, widgets_obj, "delwidget");
+});
+
 // BEGIN THE APPLICATION
 
 app.whenReady().then(() => {
@@ -187,5 +259,3 @@ app.whenReady().then(() => {
 	});	appWindow.maximize(); appWindow.openDevTools();
 	appWindow.loadFile(`${__dirname}/gui/index.html`);
 });
-
-// appWindow.webContents.postMessage('dashboard-update', data);
