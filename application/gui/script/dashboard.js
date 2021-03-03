@@ -151,9 +151,9 @@ var build_dblog_pane = function(ts_str, msg_str, priority) {
 	var cons = document.getElementById("db-console");
 	// the dblog-pane container
 	var pane = document.createElement("div");
-	if (pri === "error") pane.className = "dblog-pane bot-wall dblog-err";
-	else if (pri === "warning") pane.className = "dblog-pane bot-wall dblog-war";
-	else pane.className = "dblog-pane bot-wall dblog-not";
+	if (priority === "error") pane.className = "dblog-pane bot-wall dblog-err";
+	else if (priority === "warning") pane.className = "dblog-pane bot-wall dblog-war";
+	else pane.className = "dblog-pane bot-wall-lt dblog-not";
 	// the dblog-ts stamp text
 	var tstamp = document.createElement("p");
 	tstamp.className = "dblog-ts";
@@ -165,7 +165,7 @@ var build_dblog_pane = function(ts_str, msg_str, priority) {
 	msg.innerHTML = msg_str;
 	pane.appendChild(msg);
 	// append the pane to the page
-	cons.appendChild(pane);
+	cons.prepend(pane);
 
 };
 
@@ -200,10 +200,12 @@ var parse_dblogt = function(utc) {
 // RECEIVE INTERFACE FROM MAIN APPPLICATION
 
 ipcRenderer.on('load-db-reply', (event, dbwidgets, dblogs) => {
+	// it's possible we have some early load logs we don't want to repeat
+	document.getElementById("db-console").innerHTML = "";
 	for (wd in dbwidgets)
 		build_widget_pane(wd, dbwidgets[wd]["title"], parse_lastup(dbwidgets[wd]["lastup"]));
 	for (dl in dblogs)
-		build_dblog_pane(parse_dblogt(dl), dblogs[dl]["msg"], dblogs[dl]["priority"]);
+		build_dblog_pane(parse_dblogt(dl), dblogs[dl]["msg"], dblogs[dl]["priorityority"]);
 	document.getElementById("new-oe").onclick = function() { oe_on_new = !oe_on_new; }
 });
 
