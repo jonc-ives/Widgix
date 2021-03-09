@@ -267,6 +267,7 @@ ipcMain.on('edit-widget', (event, wid) => {
 
 	// load the window, load the widget, set editor state
 	edtWindow.loadFile(`${__dirname}/gui/editor.html`);
+	edtWindow.maximize();
 	edtWindow.openDevTools();
 	editor_open = true;
 
@@ -309,6 +310,6 @@ app.whenReady().then(() => {
 	});
 
 	appWindow.loadFile(`${__dirname}/gui/index.html`);
-	appWindow.openDevTools();
+	// appWindow.openDevTools();
 	appWindow.maximize();
 });

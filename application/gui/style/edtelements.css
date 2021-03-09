@@ -1,0 +1,23 @@
+
+#cvs-bnk {
+	width: 1920px; height: 1080px;
+	border: 3px #363636 dashed;
+	background: url('../asset/alpha_canvas_dark.jpg');
+	position: absolute;
+	top: 50%; left: 50%;
+	display: none;
+}
+
+#widget-body {
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.edit {
+	position: absolute;
+}
+
+.focused {
+	border: 1px solid blue;
+}

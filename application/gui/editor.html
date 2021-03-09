@@ -4,12 +4,48 @@
 
 <head>
 	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+	
 	<link rel="stylesheet" href="style/common.css" type="text/css" />
+	<link rel="stylesheet" href="style/editor.css" type="text/css" />
+	<link rel="stylesheet" href="style/edtcontrols.css" type="text/css" />
+	<link rel="stylesheet" href="style/edtelements.css" type="text/css" />
+	<link rel="stylesheet" href="style/edtoptions.css" type="text/css" />
+
 	<script type="text/javascript" src="script/editor.js"></script>
 </head>
 
 <body>
-	EDITOR
+	<div id="edt">
+		
+		<div id="edt-opt" class="bot-wall">
+			<div id="opt-cbx">
+				<h2>Canvas:</h2>
+				<select id="opt-csz" class="drop-down" value="1080" onchange="select_csz();">
+					<option value="1080">1980 x 1080 (1080p)</option>
+					<option value="720">1280 x 720 (720p)</option>
+					<option value="8">1360 x 768 (8 bit)</option>
+				</select>
+				<select id="opt-cbg" class="drop-down" value="alpha" onchange="select_cbg();">
+					<option value="alpha">Alpha</option>
+					<option value="dark">Dark</option>
+					<option value="light">Light</option>
+					<option value="custom">Select...</option>
+				</select>
+			</div>
+			<div id="opt-wbx">
+				<h2 id="opt-wzm">40%</h2>
+				<select id="opt-wel" class="drop-down" value=""></select>
+			</div>
+		</div>
+		
+		<div id="edt-ctl" class="lft-wall">
+			<input id="wid-tit" class="txt-entry" onchange="change_title();" />
+		</div>
+		
+		<div id="edt-cvs">
+			<div id="cvs-bnk"></div>
+		</div>
+	</div>
 </body>
 
 </html>

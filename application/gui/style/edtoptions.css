@@ -1,0 +1,55 @@
+
+#opt-cbx {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: left;
+}
+
+#opt-cbx > * {
+	margin: auto 4px;
+}
+
+#opt-cbx > h2 {
+	font-size: 12px;
+	color: #ffffff;
+	font-weight: thin;
+}
+
+#opt-csz {
+	font-size: 10px;
+}
+
+#opt-cbg {
+	font-size: 10px;
+}
+
+#custom-cbg {
+	font-size: 10px;
+	background: #43464b;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	border-radius: 6px;
+	cursor: pointer;
+	color: #afafaf;
+	padding: 6px;
+}
+
+#opt-wbx {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: right;
+}
+
+#opt-wbx > * {
+	margin: auto 4px;
+}
+
+#opt-wzm {
+	font-size: 12px;
+	color: #ffffff;
+	font-weight: thin;
+}
+
+#opt-wel {
+	width: 98px;
+	font-size: 10px;
+}
