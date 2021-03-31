@@ -1,0 +1,18 @@
+I am, with a few inconsequential exceptions, a self-taught developer. Being so,
+I expect those with a more traditional experience in computer-science will find
+that much of the (human) language I use, and many of the programming semantics
+I employ are at the least annoying, and (hopefully not) in some cases detrimental
+to the purpose of this application. Therefore, I have done my best to keep this
+application as well-organized and documented as I know how, and I am open to any
+conversation regarding the style, semantics, organization, and documentation of
+this project that will result in a reasonable improvement in its readability and
+workability.
+
+Anybody with an interest in using, understanding, or adapting this project should
+feel free to reach out to me, especially if there are any specific questions I
+could answer. I do, after all, look for every opportunity to feel important.
+
+- JT Ives
+
+jonc.ives@gmail.com
+

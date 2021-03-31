@@ -1,0 +1,36 @@
+Data Object Model successfully built. Application entry at widgix.js, manages configuration and location
+of local user assets. Instantiates three primary application model objects:
+	- (express.js).ApplicationServiceManager
+	- (logging.js).ApplicationLogManager
+	- (ipcmain.js).ApplicationProcessManager
+
+Log Manager handles utility process outcome communication, for processes like loading configuration files,
+handling local service requests from the ApplicationServiceManager, and relevant information logging for
+debugging and development.
+
+Service Manager handles local service requests from browser elements using a localized instance of a node
+Express server object. This is responsible for fetching, parsing, and formatting stream data from the
+(modules.js) module API, as well as locating and serving custom user widgets to local clients, and possibly
+remote clients from the same local network (all in the future).
+
+Process Manager handles the electron application, as well as inter-process communication (ipc) between the
+renderer process - and its subprocesses - and the main application. Most of the control-flow is handled by
+the process manager. The process manager is also responsible for handling the states of the Log and Service
+Managers.
+
+The application currently supports 
+
+ 	--- Continued Development ---
+
+*00 widgix.js 		--	no content validation for located module and widget table maps during configuration.
+*01 package.json	--	inaccurate github repository urls, both for issues and the general home page.
+*02 index.html		--	no renderer process is loaded ( via ProcessManager.start() ). Build renderer application.
+*03 logging.js 		--	Log Manager only prints logs to console. Needs debug file writing, more ipc with buildout.
+*04 modules.js 		--	(modules.js).getStream acts as stub. No modules to load from, no process control-flow.
+*05 express.js 		-- 	Does not serve widgets (/widget?name=<>). No widgets to serve.
+
+There are certainly many more topics to address. They'll continue to become more specific as development continues.
+
+	--- Bugs and Issues ---
+
+none (yet)
