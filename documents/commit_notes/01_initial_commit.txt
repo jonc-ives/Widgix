@@ -22,12 +22,12 @@ The application currently supports
 
  	--- Continued Development ---
 
-*00 widgix.js 		--	no content validation for located module and widget table maps during configuration.
-*01 package.json	--	inaccurate github repository urls, both for issues and the general home page.
-*02 index.html		--	no renderer process is loaded ( via ProcessManager.start() ). Build renderer application.
-*03 logging.js 		--	Log Manager only prints logs to console. Needs debug file writing, more ipc with buildout.
-*04 modules.js 		--	(modules.js).getStream acts as stub. No modules to load from, no process control-flow.
-*05 express.js 		-- 	Does not serve widgets (/widget?name=<>). No widgets to serve.
+*02 widgix.js 		--	no content validation for located module and widget table maps during configuration.
+*03 package.json	--	inaccurate github repository urls, both for issues and the general home page.
+*04 index.html		--	no renderer process is loaded ( via ProcessManager.start() ). Build renderer application.
+*05 logging.js 		--	Log Manager only prints logs to console. Needs debug file writing, more ipc with buildout.
+*06 modules.js 		--	(modules.js).getStream acts as stub. No modules to load from, no process control-flow.
+*07 express.js 		-- 	Does not serve widgets (/widget?name=<>). No widgets to serve.
 
 There are certainly many more topics to address. They'll continue to become more specific as development continues.
 
