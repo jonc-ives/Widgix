@@ -2,7 +2,7 @@
 
 exports.ApplicationLogManager = class {
 
-	constructor() {
+	constructor(dir) {
 		// namespaces
 		this.load = 0;
 		this.main = 1;
@@ -13,6 +13,7 @@ exports.ApplicationLogManager = class {
 		this.NO_PING = 3;
 		this.CFG_EMP = 4;
 		// instance variables
+		this.root = dir;
 		this.loadBuffer = [];
 		this.mainBuffer = [];
 		this.notifQueue = [];
@@ -20,6 +21,6 @@ exports.ApplicationLogManager = class {
 
 	add(namespace, id, key=null, outcome=null) {
 		// add logs to the appropriate buffers for queue management
-		console.log(namespace, id, key, outcome);
+		// console.log(namespace, id, key, outcome);
 	}
 }

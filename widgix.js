@@ -18,7 +18,7 @@ var config = {
 
 // INSTANTIATE LOGGING OBJECT
 
-const logger = new logs.ApplicationLogManager();
+const logger = new logs.ApplicationLogManager(__dirname);
 
 // LOCATE PERSISTENCE FOLDER -- WRITES ON DNE
 

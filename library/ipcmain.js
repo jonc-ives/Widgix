@@ -23,7 +23,7 @@ class ApplicationProcessManager {
 		this.serverObject = server;
 		this.loggerObject = logger;
 		exports.WidgixProcessManager.mainWindow = new elc.BrowserWindow(mainOptions);
-		exports.WidgixProcessManager.mainWindow.loadFile(`${__dirname}/electron/index.html`);
+		exports.WidgixProcessManager.mainWindow.loadFile(`${this.loggerObject.root}/electron/index.html`);
 		exports.WidgixProcessManager.mainWindow.openDevTools();
 		exports.WidgixProcessManager.mainWindow.maximize();
 	}

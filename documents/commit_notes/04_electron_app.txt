@@ -1,0 +1,22 @@
+DEV04 STATUS
+	- Basic interface built, renders with flash (fix later)
+	- No scripts, no controls, no interaction
+	- A few basic icons built, missing critical and important
+	- No panes yet. Templates first, then dynamic build
+
+NEXT STEPS
+	- Add the critical and important to icons
+	- Build import widget panes from sample stubs
+	- Build module panes from sample stubs
+	- Build console panes from stubs
+	- Build widget controls functionality from stubs
+		- add widget from (sample) module
+		- delete widget from table
+		- preview widget from pane button
+	- Build module controls functionality from stubs
+		- standard modal dialogue controls
+	- Export stubs to ipcmain Process Manager
+	- Build ipcmain Process Manager functionality (stub modules, widgets)
+	- Integrate and text ipc workflows
+
+*subject to change
