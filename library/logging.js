@@ -1,5 +1,7 @@
 // MIT LICENSE | Jonathan Ives, 2021
 
+const events = require('events');
+
 exports.ApplicationLogManager = class {
 
 	constructor(dir) {
@@ -17,6 +19,8 @@ exports.ApplicationLogManager = class {
 		this.loadBuffer = [];
 		this.mainBuffer = [];
 		this.notifQueue = [];
+		// for passing events to Process Manager
+		this.emitter = new events.EventEmitter();
 	}
 
 	add(namespace, id, key=null, outcome=null) {

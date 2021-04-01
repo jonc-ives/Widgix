@@ -56,12 +56,12 @@
 }
 
 .inactive-option {
-	background: #6e6e6ecf;
+	background-color: #6e6e6ecf;
 	cursor: not-allowed;
 }
 
 .active-option {
-	background: #6e6e6e47;
+	background-color: #6e6e6e47;
 	cursor: pointer;
 }
 

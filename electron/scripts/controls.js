@@ -1,18 +1,21 @@
-const { ipcRenderer } = require('electron');
-const build = require('./build.js');
+const { ipcRenderer, clipboard } = require('electron');
 
 // GLOBAL VARIABLES
 var consoleLogs = [];
+var noWidgets = false, noModules = false;
 
 // STATIC BINDING
 
-document.getElementById("add-widget").onclick = launchNewWidget;
-document.getElementById("add-module").onclick = launchNewModule;
-document.getElementById("choose-logs").onchange = parseConsoleLogs;
-document.getElementById("open-logs").onclick = openLogFile;
+document.addEventListener('DOMContentLoaded', (event) => {
+	document.getElementById("add-widget").onclick = launchNewWidget;
+	document.getElementById("add-module").onclick = launchNewModule;
+	document.getElementById("choose-logs").onchange = parseConsoleLogs;
+	document.getElementById("open-logs").onclick = openLogFile;
+});
 
 // STATIC CONTROLS
 
+// incomplete
 var launchNewWidget = function(event) {
 	// request to launch the new widget modal process
 	ipcRenderer.send('launch-new-widget');
@@ -22,6 +25,7 @@ var launchNewWidget = function(event) {
 	});
 };
 
+// incomplete
 var launchNewModule = function(event) {
 	// request to launch the new module modal process
 	ipcRenderer.send('launch-new-module');
@@ -31,6 +35,7 @@ var launchNewModule = function(event) {
 	});
 };
 
+// needs testing
 var parseConsoleLogs = function(event) {
 	var logBox = document.getElementById("console-pane-box");
 	logBox.innerHTML = "";
@@ -51,45 +56,78 @@ var openLogFile = function(event) {
 
 // DYNAMIC CONTROLS
 
-var previewWidget = function(event) {
-	var widgetPane = event.target.parentNode.parentNode.parentNode;
-	ipcRenderer.send('preview-widget', widgetPane.id);
+var previewWidget = function(widID) {
+	// var widgetPane = event.target.parentNode.parentNode.parentNode;
+	// ipcRenderer.send('preview-widget', widgetPane.id);
 };
 
-var editWidget = function(event) {
-	var widgetPane = event.target.parentNode.parentNode.parentNode;
-	ipcRenderer.send('edit-widget', widgetPane.id);
+var editWidget = function(widID) {
+	// var widgetPane = event.target.parentNode.parentNode.parentNode;
+	// ipcRenderer.send('edit-widget', widgetPane.id);
 };
 
-var optionsWidget = function(event) {
-	var widgetPane = event.target.parentNode.parentNode.parentNode;
-	ipcRenderer.send('options-widget', widgetPane.id);
+var optionsWidget = function(widID) {
+	ipcRenderer.send('options-widget', widID);
 	// on the completion of the options changes, adjust pane
 	ipcRenderer.once('options-widget-done', (event, changedObject) => {
 		// handle changes to the widget's pane
 	});
 };
 
-var deleteWidget = function(event) {
-	var widgetPane = event.target.parentNode.parentNode.parentNode;
-	ipcRenderer.send('delete-widget', widgetPane.id);
+var deleteWidget = function(widID) {
+	ipcRenderer.send('delete-widget', widID);
 	// on the completion of the delete confirmation, adjust widgets
 	ipcRenderer.once('delete-widget-done', (event, success) => {
 		// handle removal/keeping of the widget pane
 	});
 };
 
-var copyLink = function(event) {
-	event.target.parentNode.firstChild.select();
-	document.execCommand("copy");
-	build.passiveAlert("Copied to Clipboard");
+// needs testing
+var copyLink = function(widID) {
+	// passiveAlert("Copied to Clipboard");
 };
 
-var openModule = function(event) {
-	var modulePane = event.target.parentNode;
-	ipcRenderer.send('open-module', modulePane.id);
+var openModule = function(modID) {
+	console.log(modID);
+	ipcRenderer.send('open-module', modID);
 	// on the completion of the module settings
 	ipcRenderer.once('open-module-done', (event, changedObject) => {
 		// handle changes to the module pane
 	});
 };
+
+// HANDLE IPC MAIN
+
+// needs testing
+ipcRenderer.on('add-console-log', (event, newObject) => {
+	consoleLogs.append(newConsolePane(newObject));
+	parseConsoleLogs(null);
+});
+
+// needs testing
+ipcRenderer.on('load-objects', (event, loadObject) => {
+	console.log(loadObject, loadObject["widgets"], loadObject["modules"]);
+	
+	var modules = loadObject["modules"];
+	
+	if (modules) {
+		for (var modID in modules) {
+			var newModule = newModulePane(modID, modules[modID]);
+			document.getElementById("modules-pane-box").appendChild(newModule);
+		}
+	} else {
+		// add no modules button
+		// set no modules flag
+	}
+
+	var widgets = loadObject["widgets"];
+	if (widgets) {
+		for (var widID in widgets) {
+			var newWidget = newWidgetPane(widID, widgets[widID]);
+			document.getElementById("widgets-pane-box").appendChild(newWidget);
+		}
+	} else {
+		// add no widgets button
+		// set no widgets flag
+	}
+});

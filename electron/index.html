@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="styles/modpanes.css" type="text/css" />
 	<link rel="stylesheet" href="styles/conpanes.css" type="text/css" />
 	<script type="text/javascript" src="scripts/controls.js"></script>
+	<script type="text/javascript" src="scripts/build.js"></script>
 </head>
 
 <body>
@@ -20,80 +21,7 @@
 			<h3>Widgets</h3>
 			<i id="add-widget" class="add-button"></i>
 		</div>
-		<div id="widget-pane-box" class="pane-box">
-			<div class="widget-pane">
-				<div class="widget-title">
-					<h3>Stream Title Frame (800x600)</h3>
-					<p>Created: 03/31/21</p> 
-				</div>
-				<div class="widget-controls">
-					<div class="widget-link-box">
-						<input class="widget-link" value="file:///this/is/a/sample/url.html" disabled="true" />
-						<div class="clipboard copy-link"></div>
-					</div>
-					<div class="widget-options">
-						<div class="preview-widget inactive-option"><h3>Preview</h3></div>
-						<div class="edit-widget inactive-option"><h3>Edit</h3></div>
-						<div class="settings-widget active-option"><h3>Options</h3></div>
-						<div class="delete-widget active-option"><h3>Delete</h3></div>
-					</div>
-				</div>
-			</div>
-			<div class="widget-pane">
-				<div class="widget-title">
-					<h3>Fancy Social Camera Frame (800x600)</h3>
-					<p>Created: 03/31/21</p> 
-				</div>
-				<div class="widget-controls">
-					<div class="widget-link-box">
-						<input class="widget-link" value="file:///this/is/a/sample/url.html" disabled="true" />
-						<div class="clipboard copy-link"></div>
-					</div>
-					<div class="widget-options">
-						<div class="preview-widget inactive-option"><h3>Preview</h3></div>
-						<div class="edit-widget inactive-option"><h3>Edit</h3></div>
-						<div class="settings-widget active-option"><h3>Options</h3></div>
-						<div class="delete-widget active-option"><h3>Delete</h3></div>
-					</div>
-				</div>
-			</div>
-			<div class="widget-pane">
-				<div class="widget-title">
-					<h3>Live Warzone Data Slide (800x600)</h3>
-					<p>Created: 03/31/21</p> 
-				</div>
-				<div class="widget-controls">
-					<div class="widget-link-box">
-						<input class="widget-link" value="file:///this/is/a/sample/url.html" disabled="true" />
-						<div class="clipboard copy-link"></div>
-					</div>
-					<div class="widget-options">
-						<div class="preview-widget inactive-option"><h3>Preview</h3></div>
-						<div class="edit-widget inactive-option"><h3>Edit</h3></div>
-						<div class="settings-widget active-option"><h3>Options</h3></div>
-						<div class="delete-widget active-option"><h3>Delete</h3></div>
-					</div>
-				</div>
-			</div>
-			<div class="widget-pane">
-				<div class="widget-title">
-					<h3>Super Simple Stream Banner (800x600)</h3>
-					<p>Created: 03/31/21</p> 
-				</div>
-				<div class="widget-controls">
-					<div class="widget-link-box">
-						<input class="widget-link" value="file:///this/is/a/sample/url.html" disabled="true" />
-						<div class="clipboard copy-link"></div>
-					</div>
-					<div class="widget-options">
-						<div class="preview-widget inactive-option"><h3>Preview</h3></div>
-						<div class="edit-widget inactive-option"><h3>Edit</h3></div>
-						<div class="settings-widget active-option"><h3>Options</h3></div>
-						<div class="delete-widget active-option"><h3>Delete</h3></div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="widgets-pane-box" class="pane-box"></div>
 		<div id="server-banner">
 			<h3>Local Server: NodeJS Express</h3>
 			<div>
@@ -106,30 +34,9 @@
 	<div id="modules" class="main-box">
 		<div id="modules-banner" class="banner">
 			<h3>Modules</h3>
-			<i id="add-widget" class="add-button"></i>
+			<i id="add-module" class="add-button"></i>
 		</div>
 		<div id="modules-pane-box" class="pane-box">
-			<div class="module-pane">
-				<div class="module-title">
-					<h3>Call of Duty Warzone Live Data</h3>
-					<div class="good-icon"></div>
-				</div>
-				<div class="open-module active-option"><h3>Setup</h3></div>
-			</div>
-			<div class="module-pane">
-				<div class="module-title">
-					<h3>Dota 2 Career Stats</h3>
-					<div class="important-icon"></div>
-				</div>
-				<div class="open-module active-option"><h3>Setup</h3></div>
-			</div>
-			<div class="module-pane">
-				<div class="module-title">
-					<h3>Widgix Frames and Borders</h3>
-					<div class="critical-icon"></div>
-				</div>
-				<div class="open-module active-option"><h3>Setup</h3></div>
-			</div>
 		</div>
 	</div>
 
@@ -145,24 +52,7 @@
 				<p id="open-logs">Open Log</p>
 			</div>
 		</div>
-		<div id="console-pane-box" class="pane-box">
-			<div class="console-pane good-console">
-				<h3>03/31/2021:17:19</h3>
-				<p>This is just a sample console log. For more information, go shove it up your ear.This is just a sample console log. For more information, go shove it up your ear.This is just a sample console log. For more information, go shove it up your ear.This is just a sample console log. For more information, go shove it up your ear.This is just a sample console log. For more information, go shove it up your ear.</p>
-			</div>
-			<div class="console-pane critical-console">
-				<h3>03/31/2021:17:19</h3>
-				<p>This is just a sample console log. For more information, go shove it up your ear.This is just a sample console log. For more information, go shove it up your ear.This is just a sample console log.</p>
-			</div>
-			<div class="console-pane important-console">
-				<h3>03/31/2021:17:19</h3>
-				<p>This is just a sample console log. For more information, go shove it up your ear.</p>
-			</div>
-			<div class="console-pane good-console">
-				<h3>03/31/2021:17:19</h3>
-				<p>This is just a sample console log. For more information, go shove it up your ear.</p>
-			</div>
-		</div>
+		<div id="console-pane-box" class="pane-box"></div>
 	</div>
 </body>
 

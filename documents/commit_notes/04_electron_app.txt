@@ -1,16 +1,15 @@
 DEV04 STATUS
 	- Basic interface built, renders with flash (fix later)
-	- Interaction models built. No integration with ipcmain
-	- Pane Templates built. No dynamic
+	- Encountered electron bug with clipboard copy. Will add workaround to issues
+	- Pane Templates built. Dynamically loads from ipcmain stubs
+	- Full interaction, except widEdit, widPreview, widCopyURL, launched to ipcmain
+		- no return management
 
 NEXT STEPS
-	- Build import widget panes from sample stubs received from ipcmain
-	- Build module panes from sample stubs received from ipcmain
-	- Build console panes from stubs receieved from ipcmain
-	- Build pane control functionality from stubs
-		- add widget modal workflow
-		- delete widget modal workflow
-		- open module modal workflow
-	- Build out full widget and module control workflow with shell objects
+	- Create shell module (to be template) with full workflow implementation
+		- module modal workflow, renderer handle return
+		- widget modal workflow, renderer handle return
+		- delete widget workflow, renderer handle return
+		- workflow logging --> integration with renderer console
 
 *subject to change
