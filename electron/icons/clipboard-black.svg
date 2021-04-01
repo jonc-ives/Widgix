@@ -1,0 +1,21 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 1">
+<g id="Group 1">
+<path id="Rectangle 2" d="M37.5 9.5H51.5C52.3284 9.5 53 10.1716 53 11V14C53 14.8284 52.3284 15.5 51.5 15.5H37.5C36.6716 15.5 36 14.8284 36 14V11C36 10.1716 36.6716 9.5 37.5 9.5Z" stroke="black" stroke-width="3"/>
+<circle id="Ellipse 1" cx="44.5" cy="10" r="2" fill="black"/>
+<g id="Rectangle 3">
+<mask id="path-3-inside-1" fill="white">
+<rect x="38.5" y="15" width="12" height="5" rx="1"/>
+</mask>
+<rect x="38.5" y="15" width="12" height="5" rx="1" stroke="black" stroke-width="4" mask="url(#path-3-inside-1)"/>
+</g>
+<path id="Vector 1" d="M84.5 40.9286V92H36.5L36.5 26H72M84.5 40.9286L72 26M84.5 40.9286H72V26" stroke="black" stroke-width="3"/>
+<path id="Vector 2" d="M35.5 86.5H20C17.2386 86.5 15 84.2614 15 81.5V20.5C15 17.7386 17.2386 15.5 20 15.5H67C69.7614 15.5 72 17.7386 72 20.5V25.5" stroke="black" stroke-width="3"/>
+<path id="Vector 3" d="M44.5 38.5H64.5" stroke="black" stroke-width="2"/>
+<path id="Vector 4" d="M44.5 49H75.5" stroke="black" stroke-width="2"/>
+<path id="Vector 5" d="M44.5 59H67.5" stroke="black" stroke-width="2"/>
+<path id="Vector 6" d="M44.5 71H71.5" stroke="black" stroke-width="2"/>
+<path id="Vector 7" d="M44.5 82H76.5" stroke="black" stroke-width="2"/>
+</g>
+</g>
+</svg>

@@ -1,0 +1,40 @@
+
+.module-pane {
+	height: 38px;
+	background: #5a5a5a5c;
+	margin: 4px 10px 4px 8px;
+	border-radius: 8px;
+	box-shadow: 1px 2px 2px #212121ac;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+}
+
+.open-module {
+	height: 24px;
+	padding: 5px 8px 2px 8px;
+	border: 1px solid #00000063;
+	border-radius: 4px;
+	color: #acacac;
+	margin: 0 3px;
+}
+
+.module-title {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: left;
+	align-items: center;
+}
+
+.module-title h3 {
+	font-size: 16px;
+	color: #ececec;
+	font-weight: bold;
+}
+
+.module-title div {
+	width: 12px; height: 12px;
+	transform: translateY(-8px);
+}

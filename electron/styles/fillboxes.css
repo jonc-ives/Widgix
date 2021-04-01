@@ -1,0 +1,37 @@
+
+/* PANE BOX STYLES */
+
+.pane-box {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: top;
+	grid-column-start: 1;
+	grid-column-end: span 1;
+	grid-row-start: 2;
+	grid-row-end: span 1;
+	margin: 8px 0;
+}
+
+#widget-pane-box {
+
+}
+
+#console-pane-box {
+
+}
+
+.pane-box::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+.pane-box::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+.pane-box::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
