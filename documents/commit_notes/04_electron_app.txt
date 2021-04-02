@@ -4,6 +4,7 @@ DEV04 STATUS
 	- Pane Templates built. Dynamically loads from ipcmain stubs
 	- Full interaction, except widEdit, widPreview, widCopyURL, launched to ipcmain
 		- no return management
+	- Application loads widgets and modules from file, creates bound panes
 
 NEXT STEPS
 	- Create shell module (to be template) with full workflow implementation
@@ -11,5 +12,8 @@ NEXT STEPS
 		- widget modal workflow, renderer handle return
 		- delete widget workflow, renderer handle return
 		- workflow logging --> integration with renderer console
+
+	This is basically filling out the template module, the Process Manager methods
+	for the modal workflows, and the renderer's handling of the modal workflow returns.
 
 *subject to change

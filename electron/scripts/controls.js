@@ -131,3 +131,8 @@ ipcRenderer.on('load-objects', (event, loadObject) => {
 		// set no widgets flag
 	}
 });
+
+ipcRenderer.on('set-module-status', (event, statusObject) => {
+	var icon = document.querySelector(`#${statusObject["id"]} > .module-title > div`);
+	icon.className = `${statusObject["status"]}-icon`;
+});

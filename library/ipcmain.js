@@ -1,6 +1,8 @@
 // MIT LICENSE | Jonathan Ives, 2021
 
 const elc = require('electron');
+const fsys = require('./filesystem.js');
+const moduleAPI = require('./modules.js');
 
 var mainOptions = {
 	title: "widgix - Custom OBS Browser Sources",
@@ -43,9 +45,12 @@ class ApplicationProcessManager {
 		this.mainWindow = null;
 		this.serverObject = null;
 		this.loggerObject = null;
+		this.modules = {};
+		this.widgets = {};
 	}
 
-	start(server, logger) {
+	start(server, logger, config) {
+		this.configObject = config;
 		this.serverObject = server;
 		this.loggerObject = logger;
 		// begin electron application
@@ -67,9 +72,43 @@ class ApplicationProcessManager {
 		elc.ipcMain.on('open-module', this.openModule);
 		// build and send startup objects to renderer (stubs for now)
 		this.mainWindow.webContents.once('dom-ready', () => {
-			var loadObject = { "modules": moduleStub, "widgets": widgetStub };
+			this.loadModulesObject();
+			this.loadWidgetsObject();
+			var loadObject = { "modules": this.modules, "widgets": this.widgets };
 			this.mainWindow.webContents.send('load-objects', loadObject);
 		});
+	}
+
+	loadModulesObject() {
+		var rawJSON = fsys.readFromJSONFile(`${this.configObject["root"]}\\persistence\\modules.json`);
+		if (rawJSON) {
+			for (var id in rawJSON) {
+				// copy relevant object attributes
+				this.modules[id] = {
+					"title": rawJSON[id]["title"],
+					"status": "checking"
+				}; // begin async status check
+				moduleAPI.checkStatus(id, (status, log) => {
+					// this is where we would add the log, normally
+					var state = { "id": id, "status": status };
+					this.mainWindow.webContents.send('set-module-status', state);
+				});
+			}
+		} else this.modules = {};
+	}
+
+	loadWidgetsObject() {
+		var rawJSON = fsys.readFromJSONFile(`${this.configObject["root"]}\\persistence\\widgets.json`);
+		if (rawJSON) {
+			for (var id in rawJSON) {
+				this.widgets[id] = {
+					"title": rawJSON[id]["title"],
+					"width": rawJSON[id]["width"],
+					"height": rawJSON[id]["height"],
+					"url": rawJSON[id]["url"],
+				};
+			}
+		} else this.widgets = {};
 	}
 
 	addConsoleLog(eventlogObject) {

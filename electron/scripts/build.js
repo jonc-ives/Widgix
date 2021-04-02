@@ -1,12 +1,4 @@
 
-var widgetHTMLString = `
-`
-
-var moduleHTMLString = `
-<div class="module-pane">
-	
-</div>`
-
 var logHTMLString = `
 <div class="console-pane good-console">
 	<h3></h3>

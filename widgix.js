@@ -12,7 +12,7 @@ var config = {
 	"version": "1.0.A",
 	"serve_port": 3000,
 	"serve_remote": false,
-	"widget_dir": __dirname + "/persistence/widgets",
+	"widget_dir": __dirname + "\\persistence\\widgets",
 	"update_repo": ""
 };
 
@@ -123,7 +123,8 @@ const server = new expr.ApplicationServiceManager(config);
 // CONFIGURE APPLICATION OBJECT
 
 const application = main.WidgixProcessManager;
+config["root"] = __dirname;
 
 application.app.whenReady().then( () => {
-	application.start(server, logger);
+	application.start(server, logger, config);
 });
