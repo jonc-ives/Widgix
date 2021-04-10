@@ -12,6 +12,9 @@ var mainOptions = {
 	webPreferences: { nodeIntegration: true }
 };
 
+const updateServer = 'https://widgix-updates-18tjq43ml-jonc-ives.vercel.app'
+const updateURL = `${updateServer}/update/${process.platform}/${elc.app.getVersion()}`
+
 class ApplicationProcessManager {
 	
 	constructor() {
@@ -21,6 +24,10 @@ class ApplicationProcessManager {
 		this.loggerObject = null;
 		this.modules = {};
 		this.widgets = {};
+		elc.autoUpdater.setFeedURL({ url: updateURL });
+		setInterval(() => {
+			elc.autoUpdater.checkForUpdates();
+		}, 1000 * 60 * 60);
 	}
 
 	start(server, logger, config) {
@@ -30,7 +37,6 @@ class ApplicationProcessManager {
 		// begin electron application
 		this.mainWindow = new elc.BrowserWindow(mainOptions);
 		this.mainWindow.loadFile(`${this.loggerObject.root}/electron/index.html`);
-		this.mainWindow.openDevTools();
 		this.mainWindow.maximize();
 		// manage the logger.load items
 		// this is for adding new logs to renderer built from logger object
@@ -52,8 +58,25 @@ class ApplicationProcessManager {
 			this.mainWindow.webContents.send('load-objects', loadObject);
 			var goodLoad = {"message": "Application successfully intialized.", "status": "good"}
 			this.mainWindow.webContents.send('add-console-log', goodLoad);
+		});	// manage update download
+		elc.autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+			const dialogOpts = {
+				type: 'info',
+				buttons: ['Restart', 'Later'],
+				title: 'Application Update',
+				message: process.platform === 'win32' ? releaseNotes : releaseName,
+				detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+			}
+
+			dialog.showMessageBox(dialogOpts).then((returnValue) => {
+				if (returnValue.response === 0) autoUpdater.quitAndInstall()
+			})
+		}); // manage update download error
+		elc.autoUpdater.on('error', () => {
+			this.mainWindow.webContents.send('add-console-log', {"status": "critical", "message": error})
+			console.error(message);
 		});
-	}
+	}	
 
 	loadModulesObject() {
 		var rawJSON = fsys.readFromJSONFile(`${this.configObject["root"]}\\persistence\\modules.json`);
@@ -127,7 +150,6 @@ class ApplicationProcessManager {
 			};
 
 			modal.webContents.send('load-modal-settings', modalObject);
-			modal.openDevTools();
 			modal.show()
 		});
 
@@ -172,7 +194,6 @@ class ApplicationProcessManager {
 			};
 
 			modal.webContents.send('load-modal-settings', modalObject);
-			modal.openDevTools();
 			modal.show()
 		});
 
