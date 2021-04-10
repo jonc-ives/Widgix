@@ -1,0 +1,253 @@
+<!-- Really Just a Login and Logout -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+</head>
+
+<style>
+	* { padding: 0; margin: 0; box-sizing: border-box; color: #ffffff; }
+	body { 
+		position: relative; width: 880px; height: 52px;
+		background: url('sharpBarOpaque.svg');
+		background-repeat: no-repeat;
+		overflow: hidden;
+	}
+	.bg { fill: rgba(0, 0, 0, 0); }
+	#refsh {
+		position: absolute;
+		top: 26px;
+		left: 80px;
+		transform: translateY(-50%);
+	}
+	
+	#wins {
+		position: absolute;
+		top: 26px;
+		left: 190px;
+		transform: translateY(-50%);
+	}
+
+	#kdr {
+		position: absolute;
+		top: 26px;
+		left: 294px;
+		transform: translateY(-50%);
+	}
+
+	.tp {
+		width: 50px;
+		height: 26px;
+		border-radius: 13px;
+		position: absolute;
+		top: 50%; left: 388px;
+	}
+
+	.dm {
+		width: 136px;
+		height: 26px;
+		border-radius: 13px;
+		position: absolute;
+		top: 50%; left: 470px;
+	}
+
+	.kl {
+		width: 72px;
+		height: 26px;
+		border-radius: 13px;
+		position: absolute;
+		top: 50%; left: 632px;
+	}
+
+	.kd {
+		width: 82px;
+		height: 26px;
+		border-radius: 13px;
+		position: absolute;
+		top: 50%; left: 730px;
+	}
+
+	.game-index {
+		position: absolute;
+		top: 73%; right: 22px;
+		font-size: 12px;
+		font-weight: bold;
+		transition: opacity 0.5s;
+	}
+
+	.dreadful { background: #9900008f; border: 1px solid #8c8c8c; }
+	.poor { background: #9f5505b5; border: 1px solid #8c8c8c; }
+	.average { background: #80808078; border: 1px solid #8c8c8c; }
+	.good { background: #157715a1; border: 1px solid #8c8c8c; }
+	.excellent { background: #11b91191; border: 1px solid #8c8c8c; }
+	.superb { background: #06d50657; border: 1px solid #ffe244; }
+	.stat { font-size: 12px; font-weight: bold; }
+
+	.hidden {
+		transform: translateY(100px);
+		opacity: 0;
+	}
+
+	.showing {
+		transform: translateY(-50%);
+		opacity: 1;
+	}
+
+	.stat-box {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: transform 0.4s ease, opacity 0.36s ease;
+	}
+
+</style>
+
+<body>
+	<p id="refsh"></p>
+	<p id="wins"></p>
+	<p id="kdr"></p>
+</body>
+
+<script>
+var gcount = 0, idx = 0;
+var streamURL = "";
+var stats = [];
+var tsecs = 0, tmins = 15;
+// boiler plate for requesting data
+var requestJSON = function(url, callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.open('GET', url, true);
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200")
+          	callback(xobj.responseText);
+    };
+    xobj.send(null);
+} // this next one builds the table rows
+var buildNewBar = function(match, ix) {
+	var newStats = [];
+	// evaluate and build teamPlacement
+	var placement = match["teamPlacement"], finish = "", cls = "";
+	if (finish % 10 === 1 && finish !== 11) finish = placement.toString() + "st";
+	else if (finish % 10 === 2 && finish !== 12) finish = placement.toString() + "nd";
+	else if (finish % 10 === 3 && finish !== 13) finish = placement.toString() + "rd";
+	else finish = placement.toString() + "th";
+	var pl = document.createElement("div");
+	pl.innerHTML = `<p class='stat'>${finish}</p>`
+	if (placement === 1) pl.className = "superb";
+	else if (placement <= 5) pl.className = "excellent";
+	else if (placement <= 15) pl.className = "good";
+	else if (placement <= 30) pl.className = "average";
+	else if (placement <= 75) pl.className = "poor";
+	else pl.className = "average";
+	pl.className += " tp stat-box hidden";
+	newStats.push(pl);
+	document.body.appendChild(pl);
+	// evaluate and build kills
+	var kills = match["kills"], cls = "";
+	var kl = document.createElement("div");
+	kl.innerHTML = `<p class='stat'>${kills} Kills</p>`;
+	if (kills === 0) kl.className = "dreadful";
+	else if (kills <= 4) kl.className = "poor";
+	else if (kills <= 8) kl.className = "average";
+	else if (kills <= 15) kl.className = "good";
+	else if (kills <= 20) kl.className = "excellent";
+	else kl.className = "superb";
+	kl.className += " kl stat-box hidden";
+	newStats.push(kl);
+	document.body.appendChild(kl);
+	// evaluate and build damageDone
+	var dmg = match["damageDone"], cls = "";
+	var dm = document.createElement("div");
+	dm.innerHTML = `<p class='stat'>${dmg} Damage</p>`;
+	if (dmg <= 200) dm.className = "dreadful";
+	else if (dmg <= 800) dm.className = "poor";
+	else if (dmg <= 1580) dm.className = "average";
+	else if (dmg <= 2880) dm.className = "good";
+	else if (dmg <= 4400) dm.className = "excellent";
+	else dm.className = "superb";
+	dm.className += " dm stat-box hidden";
+	newStats.push(dm);
+	document.body.appendChild(dm);
+	// evaluate and build kdRatio
+	var kdr = match["kdRatio"], cls = "";
+	var kd = document.createElement("div");
+	kd.innerHTML = `<p class='stat'>${Math.round(kdr * 100) / 100} K/D</p>`;
+	if (kdr <= 0.4) kd.className = "dreadful";
+	else if (kdr <= 1) kd.className = "poor";
+	else if (kdr <= 1.8) kd.className = "average";
+	else if (kdr <= 3) kd.className = "good";
+	else if (kdr <= 4.4) kd.className = "excellent";
+	else kd.className = "superb";
+	kd.className += " kd stat-box hidden";
+	newStats.push(kd);
+	document.body.appendChild(kd);
+	// add the index value in the bottom right
+	var cnt = document.createElement("p");
+	cnt.className = "game-index hidden";
+	cnt.textContent = parseInt(ix) + 1;
+	newStats.push(cnt);
+	document.body.appendChild(cnt);
+	// finally, add the newStats to the global
+	stats.push(newStats);
+}; // this cycles through each match
+var cycleMatches = setInterval(function() {
+	// we do it this way to keep args in scope
+	var setNewStats = function(i, newStats) {
+		newStats[i].classList.remove("hidden");
+		newStats[i].classList.add("showing");
+	}
+
+	console.log(stats);
+	if (idx === stats.length) idx = 0;
+	var oldStats = stats[idx - 1];
+	if (idx === 0) oldStats = stats[stats.length - 1];
+	var newStats = stats[idx];
+	for (var i = 0; i < newStats.length; i++) {
+		oldStats[i].classList.remove("showing");
+		oldStats[i].classList.add("hidden");
+		setTimeout(setNewStats, 720, i, newStats);
+	} // increment idx for the next iteration
+	idx = idx + 1;
+}, 1000 * 15);
+// this is the timer and data refresh
+var manageTimer = setInterval(function() {
+	var refsh = document.getElementById("refsh");
+	if (tsecs === 0 && tmins === 0) {
+		tmins = 15; tsecs = 0;
+		statsURL = `http://localhost:3000/stream?modid=mwWarzone&data=cstats+wins+kdRatio`;
+		requestJSON(statsURL, function(response) {
+			response = JSON.parse(response);
+			document.getElementById("wins").textContent = response["wins"];
+			document.getElementById("kdr").textContent = Math.round(response["kdRatio"] * 100) / 100;
+		});	// get the games data
+		gamesURL = `http://localhost:3000/stream?modid=mwWarzone&data=rmatches+${gcount}+teamPlacement+kills+damageDone+kdRatio`;
+		requestJSON(gamesURL, function(response) {
+			response = JSON.parse(response);
+			for(var idx in response) buildNewBar(response[idx], idx);
+		});
+	} else {
+		if (tsecs === 0) { tsecs = 59; tmins = tmins - 1; }
+		else tsecs = tsecs - 1;
+		refsh.textContent = `${("00"+tmins).slice(-2)}:${("00"+tsecs).slice(-2)}`;
+	}
+}, 1000);
+// request the widget object
+requestJSON('http://localhost:3000/wsets?id=mwWarzoneRecentGamesStatsBar', function(response) {
+	var gcount = JSON.parse(response)["game_count"];
+	statsURL = `http://localhost:3000/stream?modid=mwWarzone&data=cstats+wins+kdRatio`;
+	requestJSON(statsURL, function(response) {
+		response = JSON.parse(response);
+		document.getElementById("wins").textContent = response["wins"];
+		document.getElementById("kdr").textContent = Math.round(response["kdRatio"] * 100) / 100;
+	});	// get the games data
+	gamesURL = `http://localhost:3000/stream?modid=mwWarzone&data=rmatches+${gcount}+teamPlacement+kills+damageDone+kdRatio`;
+	requestJSON(gamesURL, function(response) {
+		response = JSON.parse(response);
+		for(var idx in response) buildNewBar(response[idx], idx);
+	});
+});
+</script>
+
+</html>

@@ -12,32 +12,6 @@ var mainOptions = {
 	webPreferences: { nodeIntegration: true }
 };
 
-var moduleStub = {
-	"codJonIves": {
-		"title": "Call of Duty Live Warzone Stats",
-		"status": "good"
-	},
-	"Dota2JonIves": {
-		"title": "Dota 2 Career Stats",
-		"status": "important"
-	}
-};
-
-var widgetStub = {
-	"1617307732": {
-		"title": "First Widget Stub",
-		"width": "340",
-		"height": "48",
-		"url": `${__dirname}`
-	},
-	"1617307736": {
-		"title": "Second Widget Stub",
-		"width": "500",
-		"height": "600",
-		"url": "file:///c:Users/J-Breezy/Desktop/WSOne/Widgix/electron/index.html"
-	}
-};
-
 class ApplicationProcessManager {
 	
 	constructor() {
@@ -76,22 +50,19 @@ class ApplicationProcessManager {
 			this.loadWidgetsObject();
 			var loadObject = { "modules": this.modules, "widgets": this.widgets };
 			this.mainWindow.webContents.send('load-objects', loadObject);
+			var goodLoad = {"message": "Application successfully intialized.", "status": "good"}
+			this.mainWindow.webContents.send('add-console-log', goodLoad);
 		});
 	}
 
 	loadModulesObject() {
 		var rawJSON = fsys.readFromJSONFile(`${this.configObject["root"]}\\persistence\\modules.json`);
 		if (rawJSON) {
+			this.modules = rawJSON;
 			for (var id in rawJSON) {
-				// copy relevant object attributes
-				this.modules[id] = {
-					"title": rawJSON[id]["title"],
-					"status": "checking"
-				}; // begin async status check
 				moduleAPI.checkStatus(id, (status, log) => {
-					// this is where we would add the log, normally
-					var state = { "id": id, "status": status };
-					this.mainWindow.webContents.send('set-module-status', state);
+					exports.WidgixProcessManager.modules[id]["status"] = status["status"];
+					this.mainWindow.webContents.send('set-module-status', status, log);
 				});
 			}
 		} else this.modules = {};
@@ -105,7 +76,7 @@ class ApplicationProcessManager {
 					"title": rawJSON[id]["title"],
 					"width": rawJSON[id]["width"],
 					"height": rawJSON[id]["height"],
-					"url": rawJSON[id]["url"],
+					"url": `${this.loggerObject.root}/modules/widgets/${id}.html`
 				};
 			}
 		} else this.widgets = {};
@@ -132,11 +103,94 @@ class ApplicationProcessManager {
 	}
 
 	optionsWidget(event, widID) {
-		console.log("launch options widget modal");
+		// note: no access to (this) --> this is inside the call of an async event handle
+		var self = exports.WidgixProcessManager;
+
+		const modal = new elc.BrowserWindow({
+			parent: self.mainWindow,
+			modal: true,
+			resizable: false,
+			alwaysOnTop: true,
+			minimizable: false,
+			autoHideMenuBar: true,
+			width: 608,
+			height: 346,
+			webPreferences: { nodeIntegration: true }
+		});
+
+		modal.loadFile(`${self.loggerObject.root}/modules/modals/widgets/${widID}.html`);
+
+		modal.once('ready-to-show', () => {
+			var modalObject = {
+				"widget": fsys.readFromJSONFile(`${self.loggerObject.root}\\modules\\widgets\\settings\\${widID}.json`),
+				"widID": widID
+			};
+
+			modal.webContents.send('load-modal-settings', modalObject);
+			modal.openDevTools();
+			modal.show()
+		});
+
+		elc.ipcMain.once(`${widID}-cancelled`, (event) => {
+			// this avoids refiring unloading events in renderer
+			modal.destroy(); 
+		});
+
+		elc.ipcMain.once(`${widID}-saved`, (event, newSettings) => {
+			fsys.writeToJSONFile(`${self.loggerObject.root}\\modules\\widgets\\settings\\${widID}.json`, newSettings);
+			// this avoids refiring unloading events in renderer
+			modal.destroy();
+		});
 	}
 
 	openModule(event, modID) {
-		console.log("launch module modal");
+		// note: no access to (this) --> this is inside the call of an async event handle
+		var self = exports.WidgixProcessManager;
+		// make sure we have a return on the module status
+		if (self.modules[modID]["status"] === undefined)
+			return;
+
+		const modal = new elc.BrowserWindow({ 
+			parent: self.mainWindow,
+			modal: true,
+			resizable: false,
+			alwaysOnTop: true,
+			minimizable: false,
+			autoHideMenuBar: true,
+			width: 608,
+			height: 168,
+			webPreferences: { nodeIntegration: true }
+		});
+		
+		modal.loadFile(`${self.loggerObject.root}/modules/modals/modules/${modID}.html`);
+		
+		modal.once('ready-to-show', () => {
+			var modalObject = {
+				"module": fsys.readFromJSONFile(`${self.loggerObject.root}\\modules\\settings\\${modID}.json`),
+				"modID": modID,
+				"status": self.modules[modID]["status"]
+			};
+
+			modal.webContents.send('load-modal-settings', modalObject);
+			modal.openDevTools();
+			modal.show()
+		});
+
+		elc.ipcMain.once(`${modID}-cancelled`, (event) => {
+			// this avoids refiring unloading events in renderer
+			modal.destroy(); 
+		});
+
+		elc.ipcMain.once(`${modID}-saved`, (event, newSettings) => {
+			// send the settings to the module controls
+			moduleAPI.checkModuleSettings(modID, newSettings).then((valid) => {
+				if (valid !== true) modal.webContents.send('invalid-save', valid);
+				else {
+					fsys.writeToJSONFile(`${self.loggerObject.root}\\modules\\settings\\${modID}.json`, newSettings);
+					modal.destroy();
+				}
+			});
+		});
 	}
 
 	// in dev

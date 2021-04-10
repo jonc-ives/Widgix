@@ -1,0 +1,164 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	justify-content: top;
+	align-items: left;
+	background: #122b54a2;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+#title {
+	margin: 2px 0px 12px 12px;
+	font-size: 18px;
+	font-weight: bold;
+	color: #3c3c3c;
+}
+
+#sample-bar {
+	width: 97%;
+	height: 24px;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 16px;
+	padding-right: 16px;
+	margin-bottom: 18px;
+	margin-left: 10px;
+	background-color: #00000088;
+}
+
+#th {
+	font-size: 12px;
+}
+
+#tr {
+	font-size: 12px;
+}
+
+#controls {
+	width: 100%;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 10fr 12fr 10fr;
+	align-items: center;
+	justify-content: left;
+	padding-left: 12px;
+}
+
+#bc-con {
+	grid-column-start: 1;
+	grid-column-end: span 1;
+	grid-row-start: 1;
+	grid-row-end: span 1;
+}
+
+#bo-con {
+	grid-column-start: 2;
+	grid-column-end: span 1;
+	grid-row-start: 1;
+	grid-row-end: span 1;	
+}
+
+#tc-con {
+	grid-column-start: 3;
+	grid-column-end: span 1;
+	grid-row-start: 1;
+	grid-row-end: span 1;
+}
+
+#gcount-con {
+	grid-column-start: 1;
+	grid-column-end: span 1;
+	grid-row-start: 2;
+	grid-row-end: span 1;
+}
+
+#headers-con {
+	grid-column-start: 2;
+	grid-column-end: span 1;
+	grid-row-start: 2;
+	grid-row-end: span 1;
+}
+
+#stats-con {
+	grid-column-start: 3;
+	grid-column-end: span 1;
+	grid-row-start: 2;
+	grid-row-end: span 1;
+}
+
+#bo {
+	width: 56px;
+}
+
+input {
+	height: 26px;
+	margin: 0 12px 12px 0;
+	padding: 2px 2px 2px 6px;
+	border: 1px solid #acacacac;
+	border-radius: 3px;
+}
+
+#gcount {
+	height: 26px;
+	margin-bottom: 12px;
+}
+
+label {
+	color: #3c3c3c;
+}
+
+#buttons {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: left;
+	align-items: bottom;
+	margin-left: 13px;
+}
+
+#buttons > div {
+	width: 56px;
+	height: 24px;
+	border: 1px solid #acacacac;
+	border-radius: 4px;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	color: #dcdcdc;
+	padding-top: 2px;
+}
+
+#save {
+	background: #008000;
+	cursor: pointer;
+}
+
+#cancel {
+	cursor: pointer;
+	background: #3c3c3c;
+	margin-left: 16px;
+}

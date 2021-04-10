@@ -1,6 +1,7 @@
 {
-	"templateModule": {
-		"dir": "C:\\Users\\J-Breezy\\Desktop\\WSOne\\Widgix\\modules\\template",
-		"title": "Template Module"
+	"mwWarzone": {
+		"title": "Modern Warfare Warzone -- Live Stats",
+		"widgets": [],
+		"streams": []
 	}
 }

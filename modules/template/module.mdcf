@@ -1,9 +1,0 @@
-{
-	"author": "JT Ives",
-	"id": "template",
-	"title": "Template Module",
-	"dependencies": [],
-	"widgets": {
-		"Empty Widget": "./sample_widget"
-	}	
-}

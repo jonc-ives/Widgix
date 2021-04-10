@@ -35,36 +35,25 @@ var launchNewModule = function(event) {
 	});
 };
 
+var openLogFile = function(event) {
+	ipcRenderer.send('open-log-file');
+};
+
 // needs testing
 var parseConsoleLogs = function(event) {
 	var logBox = document.getElementById("console-pane-box");
 	logBox.innerHTML = "";
 	for (var node in consoleLogs) {
-		if (logBox.value === "debug") logBox.prepend(logBox[node]);
-		else if (logBox.value === "important") {
-			if ("important-console" in consoleLogs[node].classList || "critical-console" in consoleLogs[node].classList)
-				logBox.prepend(logBox[node]);
-		} else if (logBox.value === "critical" && "critical-console" in consoleLogs[node].classList) {
-			logBox.prepend(logBox[node]);
-		}
+		if (logBox.value === "important") {
+			if (consoleLogs[node].classList.includes("important-console") || consoleLogs[node].classList.includes("critical-console"))
+				logBox.prepend(consoleLogs[node]);
+		} else if (logBox.value === "critical" && consoleLogs[node].classList.includes("critical-console")) {
+			logBox.prepend(consoleLogs[node]);
+		} else logBox.prepend(consoleLogs[node]);
 	}
 };
 
-var openLogFile = function(event) {
-	ipcRenderer.send('open-log-file');
-};
-
 // DYNAMIC CONTROLS
-
-var previewWidget = function(widID) {
-	// var widgetPane = event.target.parentNode.parentNode.parentNode;
-	// ipcRenderer.send('preview-widget', widgetPane.id);
-};
-
-var editWidget = function(widID) {
-	// var widgetPane = event.target.parentNode.parentNode.parentNode;
-	// ipcRenderer.send('edit-widget', widgetPane.id);
-};
 
 var optionsWidget = function(widID) {
 	ipcRenderer.send('options-widget', widID);
@@ -74,11 +63,11 @@ var optionsWidget = function(widID) {
 	});
 };
 
-var deleteWidget = function(widID) {
-	ipcRenderer.send('delete-widget', widID);
-	// on the completion of the delete confirmation, adjust widgets
-	ipcRenderer.once('delete-widget-done', (event, success) => {
-		// handle removal/keeping of the widget pane
+var openModule = function(modID) {
+	ipcRenderer.send('open-module', modID);
+	// on the completion of the module settings
+	ipcRenderer.once('open-module-done', (event, changedObject) => {
+		// handle changes to the module pane
 	});
 };
 
@@ -87,52 +76,101 @@ var copyLink = function(widID) {
 	// passiveAlert("Copied to Clipboard");
 };
 
-var openModule = function(modID) {
-	console.log(modID);
-	ipcRenderer.send('open-module', modID);
-	// on the completion of the module settings
-	ipcRenderer.once('open-module-done', (event, changedObject) => {
-		// handle changes to the module pane
-	});
+// in dev
+var deleteWidget = function(widID) {
+	// ipcRenderer.send('delete-widget', widID);
+	// // on the completion of the delete confirmation, adjust widgets
+	// ipcRenderer.once('delete-widget-done', (event, success) => {
+	// 	// handle removal/keeping of the widget pane
+	// });
+};
+
+// in dev
+var editWidget = function(widID) {
+	// var widgetPane = event.target.parentNode.parentNode.parentNode;
+	// ipcRenderer.send('edit-widget', widgetPane.id);
+};
+
+// in dev
+var previewWidget = function(widID) {
+	// var widgetPane = event.target.parentNode.parentNode.parentNode;
+	// ipcRenderer.send('preview-widget', widgetPane.id);
 };
 
 // HANDLE IPC MAIN
 
 // needs testing
 ipcRenderer.on('add-console-log', (event, newObject) => {
-	consoleLogs.append(newConsolePane(newObject));
+	console.log(newObject);
+	consoleLogs.push(newConsoleLog(newObject));
 	parseConsoleLogs(null);
 });
 
 // needs testing
 ipcRenderer.on('load-objects', (event, loadObject) => {
-	console.log(loadObject, loadObject["widgets"], loadObject["modules"]);
-	
+	var moduleCount, widgetCount;	
 	var modules = loadObject["modules"];
 	
 	if (modules) {
+		moduleCount = modules.length;
 		for (var modID in modules) {
 			var newModule = newModulePane(modID, modules[modID]);
 			document.getElementById("modules-pane-box").appendChild(newModule);
 		}
 	} else {
+		moduleCount = 0;
 		// add no modules button
 		// set no modules flag
 	}
 
 	var widgets = loadObject["widgets"];
 	if (widgets) {
+		widgetCount = widgets.length;
 		for (var widID in widgets) {
 			var newWidget = newWidgetPane(widID, widgets[widID]);
 			document.getElementById("widgets-pane-box").appendChild(newWidget);
 		}
 	} else {
+		widgetCount = 0;
 		// add no widgets button
 		// set no widgets flag
 	}
+
+	var newLog = {};
+	if (widgetCount === 0 && moduleCount === 0) {
+		newLog = {
+			"message": "Application failed to locate valid modules and widgets. Try reinstalling the application, or see the application log file for more details.",
+			"status": "critical"
+		}; consoleLogs.push(newConsoleLog(newLog));
+	} else if (widgetCount === 0) {
+		newLog = {
+			"message": "Application failed to locate valid widgets. Try reinstalling the application, or see the application log file for more details.",
+			"status": "critical"
+		}; consoleLogs.push(newConsoleLog(newLog));
+		newLog = {
+			"message": `Application successfully loaded ${moduleCount} module${moduleCount === 1 ? '' : 's'}.`,
+			"status": "good"
+		}; consoleLogs.push(newConsoleLog(newLog));
+	} else if (moduleCount === 0) {
+		newLog = {
+			"message": "Application failed to locate valid modules. Try reinstalling the application, or see the application log file for more details.",
+			"status": "critical"
+		}; consoleLogs.push(newConsoleLog(newLog));
+		newLog = {
+			"message": `Application successfully loaded ${widgetCount} widget${widgetCount === 1 ? '' : 's'}.`,
+			"status": "good"
+		}; consoleLogs.push(newConsoleLog(newLog));
+	} else {
+		newLog = {
+			"message": `Application successfully loaded ${moduleCount} module${moduleCount === 1 ? '' : 's'} and ${widgetCount} widget${widgetCount === 1 ? '' : 's'}.`,
+			"status": "good"
+		}; consoleLogs.push(newConsoleLog(newLog));
+	} parseConsoleLogs(null);
 });
 
-ipcRenderer.on('set-module-status', (event, statusObject) => {
+ipcRenderer.on('set-module-status', (event, statusObject, logObject) => {
+	console.log(statusObject, logObject);
 	var icon = document.querySelector(`#${statusObject["id"]} > .module-title > div`);
 	icon.className = `${statusObject["status"]}-icon`;
+	if (logObject) consoleLogs.push(newConsoleLog(logObject));
 });

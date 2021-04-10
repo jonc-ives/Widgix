@@ -1,14 +1,11 @@
 {
-	"1617307732": {
-		"title": "First Widget Stub",
-		"width": "340",
-		"height": "48",
-		"url": "C:\\Users\\J-Breezy\\Desktop\\WSOne\\Widgix"
+	"mwWarzoneRecentGamesTable": {
+		"title": "Recent Warzone Matches Table",
+		"width": "125", "height": "??",
+		"no_modal" : false
 	},
-	"1617307736": {
-		"title": "Second Widget Stub",
-		"width": "500",
-		"height": "600",
-		"url": "C:\\Users\\J-Breezy\\Desktop\\WSOne\\Widgix"
+	"mwWarzoneRecentGamesStatsBar": {
+		"title": "Warzone KD, Wins, Recent Matches Bar",
+		"width": "880", "height": "52" 
 	}
 }

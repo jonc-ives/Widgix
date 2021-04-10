@@ -1,0 +1,102 @@
+<!-- Really Just a Login and Logout -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+</head>
+
+<style>
+	* { padding: 0; margin: 0; }
+	td, th { min-width: 42px; }
+	th { font-size: 10px; padding: 6px; text-align: left; }
+	td { height: 18px; padding: 3px; padding-left: 10px; font-size: 10px; }
+	.space-h { height: 3px; background: rgba(0, 0, 0, 0); }
+	.space { height: 1px; background: rgba(0, 0, 0, 0); }
+	table {	border-collapse: collapse; padding: 0; }
+</style>
+
+<body>
+	<table id="table">
+		<tr><th id="refsh"></th><th>Kills</th><th>Damage</th><th>KDR</th></tr>
+		<tr class="space-h"></tr>
+	</table>
+</body>
+
+<script>
+var wsets = {};
+var streamURL = "";
+var tsecs = 0, tmins = 15;
+// boiler plate for requesting data
+var requestJSON = function(url, callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.open('GET', url, true);
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200")
+          	callback(xobj.responseText);
+    };
+    xobj.send(null);
+} // this next one builds the table rows
+var buildNewRow = function(match) {
+	var table = document.getElementById("table");
+	var newRow = document.createElement("tr");
+	// parse and prettify team placement
+	var finish = match["teamPlacement"];
+	if (finish % 10 === 1 && finish !== 11) finish = match["teamPlacement"].toString() + "st";
+	else if (finish % 10 === 2 && finish !== 12) finish = match["teamPlacement"].toString() + "nd";
+	else if (finish % 10 === 3 && finish !== 13) finish = match["teamPlacement"].toString() + "rd";
+	else finish = match["teamPlacement"].toString() + "th";
+	// round kdr because it is wayyy too precise as it is
+	var kdr = Math.round(match["kdRatio"] * 100) / 100;
+	// add the table data elements to the new row
+	newRow.innerHTML = `<td>${finish}</td><td>${match["kills"]}</td><td>${match["damageDone"]}</td><td>${kdr}</td>`;
+	// create the new spacer element
+	var newSpacer = document.createElement("tr");
+	newSpacer.className = "space";
+	// add the new row and spacer to the table
+	table.appendChild(newRow);
+	table.appendChild(newSpacer);
+} // this is the timer and data refresh
+var manageTimer = setInterval(function() {
+	var refsh = document.getElementById("refsh");
+	if (tsecs === 0 && tmins === 0) {
+		tmins = 15; tsecs = 0;
+		requestJSON(streamURL, function(response) {
+			document.getElementById("table").innerHTML = "<tr id='h'><th id='refsh'></th><th>Kills</th><th>Damage</th><th>KDR</th></tr>";
+			response = JSON.parse(response);
+			for(var idx in response) {
+				buildNewRow(response[idx]);
+			}
+		});
+	} else {
+		if (tsecs === 0) { 
+			tsecs = 59; tmins = tmins - 1;
+		} else tsecs = tsecs - 1;
+		refsh.textContent = `${("00"+tmins).slice(-2)}:${("00"+tsecs).slice(-2)}`;
+	}
+}, 1000);
+// loads the widget settings into the style
+var loadStyles = function(object) {
+	var bgColor = object["background"];
+	var bgOpacity = object["background_opacity"];
+	var fontColor = object["font_color"];
+	var columns = object["column_headers"];
+	var style = document.createElement("style");
+	style.innerHTML = `td, th { color: ${fontColor}; background: ${bgColor}${bgOpacity}; } .h { display: ${columns ? 'inherit' : 'none'}; }`.trim();
+	document.body.appendChild(style);
+}; // request the widget object
+requestJSON('http://localhost:3000/wsets?id=mwWarzoneRecentGamesTable', function(response) {
+	wsets = JSON.parse(response);
+	loadStyles(wsets);
+	streamURL = `http://localhost:3000/stream?modid=mwWarzone&data=rmatches+${wsets["game_count"]}+teamPlacement+kills+damageDone+kdRatio`;
+	requestJSON(streamURL, function(response) {
+		response = JSON.parse(response);
+		for(var idx in response) {
+			buildNewRow(response[idx]);
+		}
+	});	
+});
+</script>
+
+</html>
