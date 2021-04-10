@@ -12,13 +12,12 @@ var config = {
 	"version": "1.0.A",
 	"serve_port": 3000,
 	"serve_remote": false,
-	"widget_dir": __dirname + "/persistence/widgets",
 	"update_repo": ""
 };
 
 // INSTANTIATE LOGGING OBJECT
 
-const logger = new logs.ApplicationLogManager();
+const logger = new logs.ApplicationLogManager(__dirname);
 
 // LOCATE PERSISTENCE FOLDER -- WRITES ON DNE
 
@@ -61,14 +60,6 @@ fsys.assertFileDirectory(__dirname + "/persistence/config.json", true, (assert) 
 				raw[key] = config[key];
 				logger.add(logger.load, logger.KEY_INV, key=key);
 				changesMade = true;
-			} else if (key === "widget_dir") {
-				var assertion = fsys.assertFileDirectory(raw[key], true); // no throws
-				if (!assertion) {
-					raw[key] = config[key];
-					assertion = fsys.assertFileDirectory(raw[key], true); // no throws
-					logger.add(logger.load, logger.FIL_INV, key=key, outcome=assertion); // manages throws (if necessary)
-					changesMade = true;
-				}
 			} else if (key === "update_repo") {
 				var assertion = util.assertUpdatesRepo(raw[key]); // no throws
 				if (!assertion) {
@@ -123,7 +114,8 @@ const server = new expr.ApplicationServiceManager(config);
 // CONFIGURE APPLICATION OBJECT
 
 const application = main.WidgixProcessManager;
+config["root"] = __dirname;
 
 application.app.whenReady().then( () => {
-	application.start(server, logger);
+	application.start(server, logger, config);
 });

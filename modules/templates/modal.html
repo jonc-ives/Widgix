@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+</head>
+
+<style>
+	/* ADD YOUR STYLES HERE */
+</style>
+
+<body>
+	<!-- ADD YOUR HTML HERE -->
+</body>
+
+<script>
+	// IMPORTANT NOTE -- IF CHANGES ARE MADE TO THE SAVE AND CANCEL BUTTONS,
+	// ONCLICK SHOULD STILL BE BOUND TO FUNCTIONS save AND cancel.
+	
+	// ESSENTIAL -- LEAVE THE FOLLOWING MARKED SECTION ALONE
+	const elc = require('electron');
+	// This gets passed back when the user chooses to save the settings,
+	// so any changes that are made here will reflect in module.mdcf
+	var moduleSettings = {};
+	// This is for any cases where the module's ID may matter
+	var moduleID = "";
+	// ESSENTIAL -- THIS IS THE END OF THE MARKED SECTION
+
+	//* make your require assignments here
+	//*
+	//*
+
+	//* define your global variables here
+	//*
+	//*
+
+	// ESSENTIAL DEF -- ONLY EDIT THE FOLLOWING CODE BLOCK WHERE MARKED
+	elc.ipcRenderer.on('load-modal-settings', (event, modalObject) => {
+		// ESSENTIAL -- LEAVE THE FOLLOWING MARKED SECTION ALONE
+		moduleSettings = modalObject["module"];
+		moduleID = modalObject["modID"];
+		// ESSENTIAL -- THIS IS THE END OF THE MARKED SECTION
+
+		//* use this section to load the module settings into the DOM
+		//*
+		//*
+	});
+
+	// ESSENTIAL DEF -- ONLY EDIT THE FOLLOWING CODE BLOCK WHERE MARKED
+	window.onbeforeunload = (e) => {
+		//* this event takes place when the user exits from the modal; Changes are not saved,
+		//* so anything you want to do before the modal process closes should be done here.
+		//*
+		//*
+
+		// ESSENTIAL -- LEAVE THE FOLLOWING MARKED SECTION ALONE
+		elc.ipcRenderer.send(`${moduleID}-cancelled`, moduleID);
+		e.returnValue = true;
+		// ESSENTIAL -- THIS IS THE END OF THE MARKED SECTION
+	}
+
+	// ESSENTIAL DEF -- ONLY EDIT THE FOLLOwING CODE BLOCK WHERE MARKED
+	var cancel = function() {
+		//* this is called when the user cancels their changes, so anything you want to do
+		//* before the modal process closes should be done here.
+		//*
+		//*
+
+		// ESSENTIAL -- LEAVE THE FOLLOWING MARKED SECTION ALONE
+		elc.ipcRenderer.send(`${moduleID}-cancelled`);
+		e.returnValue = true;
+		// ESSENTIAL -- THIS IS THE END OF THE MARKED SECTION
+	}
+
+	// ESSENTIAL DEF -- ONLY EDIT THE FOLLOwING CODE BLOCK WHERE MARKED
+	var save = function() {
+		//* this is called when the user saves their changes. This is where you'll need to
+		//* process the user's selected settings into an object that will overwrite the
+		//* module.mdcf config file properties. This is done key-by-key, so unrelated options
+		//* will not be lost during the write process.
+		//*
+		//*
+
+		// ESSENTIAL -- LEAVE THE FOLLOWING MARKED SECTION ALONE
+		elc.ipcRenderer.send(`${moduleID}-saved`, moduleSettings);
+		e.returnValue = true;
+		// ESSENTIAL -- THIS IS THE END OF THE MARKED SECTION
+	}
+
+	//* everything else is all up to you...
+	//*
+	//*
+
+</script>
+
+</html>

@@ -1,0 +1,44 @@
+
+/* ICON STYLES */
+
+.add-button {
+	background: url('../icons/add-icon.svg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 20px; height: 20px;
+	transition: 0.2s ease;
+}
+
+.add-button:hover {
+	cursor: pointer;
+	transform: translate(1px, -1px);
+}
+
+.good-icon {
+	background: url('../icons/good-status.svg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 20px; height: 20px;
+}
+
+.critical-icon {
+	background: url('../icons/critical-status.svg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 20px; height: 20px;	
+}
+
+.important-icon {
+	background: url('../icons/important-status.svg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 20px; height: 20px;	
+}
+
+.clipboard {
+	background: url('../icons/clipboard-white.svg');
+	background-repeat: no-repeat;
+	background-size: 55%;
+	background-position: center;
+	cursor: pointer;
+}

@@ -1,1 +1,59 @@
-INDEX
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+	<link rel="stylesheet" href="styles/banners.css" type="text/css" />
+	<link rel="stylesheet" href="styles/fillboxes.css" type="text/css" />
+	<link rel="stylesheet" href="styles/grids.css" type="text/css" />
+	<link rel="stylesheet" href="styles/icons.css" type="text/css" />
+	<link rel="stylesheet" href="styles/widpanes.css" type="text/css" />
+	<link rel="stylesheet" href="styles/modpanes.css" type="text/css" />
+	<link rel="stylesheet" href="styles/conpanes.css" type="text/css" />
+	<script type="text/javascript" src="scripts/controls.js"></script>
+	<script type="text/javascript" src="scripts/build.js"></script>
+</head>
+
+<body>
+	<div id="widgets" class="main-box">
+		<div id="widget-banner" class="banner">
+			<h3>Widgets</h3>
+			<i id="add-widget" class="add-button" hidden></i>
+		</div>
+		<div id="widgets-pane-box" class="pane-box"></div>
+		<div id="server-banner">
+			<h3>Local Server: NodeJS Express</h3>
+			<div>
+				<i class="good-icon"></i>
+				<p>Serving Local</p>
+			</div>
+		</div>
+	</div>
+
+	<div id="modules" class="main-box">
+		<div id="modules-banner" class="banner">
+			<h3>Modules</h3>
+			<i id="add-module" class="add-button" hidden></i>
+		</div>
+		<div id="modules-pane-box" class="pane-box">
+		</div>
+	</div>
+
+	<div id="console" class="main-box">
+		<div id="console-banner">
+			<h3>Console</h3>
+			<div>
+				<select id="choose-logs" value="debug">
+					<option value="debug">Debug</option>
+					<option value="important">Important</option>
+					<option value="critical">Critical</option>
+				</select>
+				<p id="open-logs">Open Log</p>
+			</div>
+		</div>
+		<div id="console-pane-box" class="pane-box"></div>
+	</div>
+</body>
+
+</html>

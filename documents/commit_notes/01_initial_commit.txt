@@ -18,19 +18,29 @@ renderer process - and its subprocesses - and the main application. Most of the 
 the process manager. The process manager is also responsible for handling the states of the Log and Service
 Managers.
 
-The application currently supports 
+The application currently supports:
+	- loading static modules and widgets into the user interface
+	- static module and widget implementation and integration with electron endpoints
+	- low-level outcome logging
 
- 	--- Continued Development ---
+ 	--- Continued Development DEV ---
+02 widgix.js 		--	no content validation for located module and widget table maps during configuration.
+03 package.json		--	inaccurate github repository urls, both for issues and the general home page.
+05 logging.js 		--	Log Manager only prints logs to console. Needs debug file writing, more ipc with buildout.
+*08 gui/app		 	--	dynamically load new widgets from static modules
+*09 gui/app 		--	dynamically load new modules from external code source, import concurrent widgets
+*10 gui/app 		--	user-controls for renaming actively implemented widgets
+*11 widgix 			--	create and implement active update server -- github pages
+*12 widgix			-- 	create Windows64 installation workflow and package -- integrate w/ github pages
 
-*02 widgix.js 		--	no content validation for located module and widget table maps during configuration.
-*03 package.json	--	inaccurate github repository urls, both for issues and the general home page.
-*04 index.html		--	no renderer process is loaded ( via ProcessManager.start() ). Build renderer application.
-*05 logging.js 		--	Log Manager only prints logs to console. Needs debug file writing, more ipc with buildout.
-*06 modules.js 		--	(modules.js).getStream acts as stub. No modules to load from, no process control-flow.
-*07 express.js 		-- 	Does not serve widgets (/widget?name=<>). No widgets to serve.
+	--- Bugs and Issues ISS ---
+*01	gui/app			--	Electron bug workaround for clipboard copy of file:///url
+*02 gui 			--  failed mwWarzone user locate results in error, forces restart of modal
 
-There are certainly many more topics to address. They'll continue to become more specific as development continues.
+	--- CRITICAL CHANGES CRI ---
+*01					--	wholistically redesign application workflow
 
-	--- Bugs and Issues ---
-
-none (yet)
+	--- Recently Resolved ---
+DEV04				--	implemented first iteration of gui application
+DEV06				--	first module, with two widgets, built and implemented
+DEV07				--	application now serves data to application widgets

@@ -1,0 +1,11 @@
+{
+	"mwWarzoneRecentGamesTable": {
+		"title": "Recent Warzone Matches Table",
+		"width": "125", "height": "??",
+		"no_modal" : false
+	},
+	"mwWarzoneRecentGamesStatsBar": {
+		"title": "Warzone KD, Wins, Recent Matches Bar",
+		"width": "880", "height": "52" 
+	}
+}

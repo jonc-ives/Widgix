@@ -26,6 +26,10 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "call-of-duty-api": "^1.3.2",
+    "check-internet-connected": "^2.0.5",
+    "cors": "^2.8.5",
+    "events": "^3.3.0",
     "express": "^4.17.1",
     "font-list": "^1.2.13",
     "fs": "^0.0.1-security",

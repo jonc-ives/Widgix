@@ -1,0 +1,109 @@
+
+/* BANNER STYLES */
+
+.banner {
+	background: #10284e;
+	grid-column-start: 1;
+	grid-column-end: span 1;
+	grid-row-start: 1;
+	grid-row-end: span 1;
+	padding-left: 28px;
+	padding-right: 42px;
+}
+
+.banner h3 {
+	color: #acacac;
+	font-size: 24px;
+}
+
+#widget-banner {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#modules-banner {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#console-banner {
+	background: #10284e;
+	grid-column-start: 1;
+	grid-column-end: span 1;
+	grid-row-start: 1;
+	grid-row-end: span 1;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	padding-right: 24px;
+	padding-left: 24px;
+}
+
+#console-banner div {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+}
+
+#console-banner h3 {
+	color: #acacac;
+	font-size: 12px;
+}
+
+#console-banner div select {
+	font-size: 10px;
+	height: 16px;
+	background: #1c2b38;
+	color: #acacac;
+	border: 1px solid #acacac;
+	border-radius: 4px;
+	margin-right: 12px;
+}
+
+#console-banner div p {
+	color: #acacac;
+	font-size: 10px;
+}
+
+#console-banner p:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#server-banner {
+	background: #c06118fa;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0px 24px;
+	border-right: 1px solid #1f3353;
+}
+
+#server-banner h3 {
+	color: #d9d9d9;
+	font-size: 12px;
+}
+
+#server-banner div {
+	display: flex;
+	flex-flow: row-nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#server-banner div i {
+	margin-right: 12px;
+	width: 16px;
+	height: 16px;
+}
+
+#server-banner div p {
+	color: #d9d9d9;
+	font-size: 12px;
+}

@@ -1,0 +1,48 @@
+NOTE: This development branch also included solutions for DEV06 and DEV07.
+
+MODULE LOAD AND WORKFLOW
+	
+In order for a module to load, it must be included in the ./persistence/modules.json file. At runtime,
+the application loads each module from the json object, and passes its information to the main render
+process at DOM-READY and calls the module API library script function checkStatus. The checkStatus
+function will asynchronously invoke the module controller's checkStatus function, which is responsible
+for indicating to the application whether the module is ready to be used, and creating a log object
+for outcome-communication. The module information passed to the main render process is used to
+build a new pane into the Modules Section of GUI and to bind the option button to the emission of an
+electron ipc event handled by the Process Manager.
+
+When the option button event is emitted, the Process Manager opens the module's modal application
+as a new modal Browser Window attached to the main render process. The user then makes any settings
+changes present on the modal, and either closes the modal (by the close button or cancel button) or
+selects the save options button. If the modal is closed without the save option, an event is emitted
+to a Process Manager handler that destroys the modal. If the save option is selected, an event is
+emitted to a Process Manager handler that overwrites the module settings file with the new settings
+object, then destroys the modal.
+
+WIDGET LOAD AND WORKFLOW
+
+In order for a widget to load, it must be included in the ./persistence/widgets.json file. At runtime,
+the application loads each widget from the json object and passes its information to the main render
+process at DOM-READY. The main render process then uses that information to build a new widget pane
+into the Widgets Section of the GUI, and binds the edit, preview, options, and delete buttons to event
+emitters that are handled by the Process Manager.
+
+When the option button event is emitted for a widget, the Process Manager opens the widget's modal
+application as a new modal Browser Window attached to the main render process. The user then makes any
+settings changes present on the modal, and either closes the modal (by the close button or cancel
+button) or selects the save options button. If the modal is closed without the save option, an event
+is emitted to a Process Manager handler that destroys the modal. If the save option is selected, an
+event is emitted to a Process Manager handler that overwrites the widget settings file with the new
+settings object, then destroys the modal.
+
+WIDGET IMPLEMENTATION
+
+When a static widget is loaded by an external source, the widget application has access to a few API
+endpoints managed by the Service Manager. The widget application can request the relevant widget
+settings object or a group of data provided by a single module controller (on controller per request).
+The widget application is responsible for requesting, parsing, and implementing the data. A template
+folder with placeholder functions and application structure was built to make reproducing working
+widgets easier.
+
+MODULE DIRECTORY STRUCTURE -- SEE ./modules/templates
+

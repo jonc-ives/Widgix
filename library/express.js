@@ -2,8 +2,11 @@
 
 const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
+const path = require('path');
 
 const moduleAPI = require('./modules.js');
+const fsys = require('./filesystem.js');
 
 // const hbs = require('hbs');
 // const path = require('path');
@@ -13,11 +16,14 @@ const moduleAPI = require('./modules.js');
 exports.ApplicationServiceManager = class {
 	
 	constructor(configObject) {
-		this.httpInstance = undefined;
-		this.server = express();	
+
 		this.streamList = [];
+		this.httpInstance = undefined;
+		this.server = express();
+		this.server.use(cors())
 		this.server.get('/stream', this.getStream);
 		this.server.get('/widget', this.getWidget);
+		this.server.get('/wsets', this.getWidgetSettings);
 		this.server.use(bodyParser.urlencoded({extended: true}));
 		this.httpInstance = this.server.listen({ port: configObject.serve_port ? configObject.serve_port : 3000 }, (error) => {
 			// handle server error here
@@ -34,10 +40,16 @@ exports.ApplicationServiceManager = class {
 		}
 
 		// fetch strdat object -- async
-		moduleAPI.getStreamData(req.query.streams).then( (strdat) => {
-			res.json({message: "yippeee"});
+		moduleAPI.getStreamData(req.query).then( (strdat) => {
+			res.json(strdat);
 		});
 
+	}
+
+	getWidgetSettings(req, res) {
+		var widID = req.query.id;
+		var rawJSON = fsys.readFromJSONFile(path.resolve(`./modules/widgets/settings/${widID}.json`));
+		res.json(rawJSON);
 	}
 
 	getWidget(req, res) {
