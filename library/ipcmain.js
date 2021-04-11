@@ -99,7 +99,7 @@ class ApplicationProcessManager {
 					"title": rawJSON[id]["title"],
 					"width": rawJSON[id]["width"],
 					"height": rawJSON[id]["height"],
-					"url": `${this.loggerObject.root}/modules/widgets/${id}.html`
+					"url": `${this.loggerObject.root}\\modules\\widgets\\${id}.html`
 				};
 			}
 		} else this.widgets = {};
